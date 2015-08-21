@@ -1,3 +1,27 @@
+$mainFontColor : #405E6B;
+
+
 body {
+	margin: 0 !important;
   font-family: sans-serif;
 }
+
+//*****************left-nav-bar*********************
+.container{
+	padding-top: 35px;
+	padding-left: 10px;
+}
+.title{
+	font-family: STHeitiTC-Medium;
+	font-size: 38px;
+	color: $mainFontColor;
+	line-height: 39px; 
+	text-align:center;
+}
+nav{
+	background-color: #D7DADD;
+}
+
+
+
+//*****************left-nav-bar*********************
