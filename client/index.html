@@ -23,10 +23,10 @@
   </head>
   <body>
 
-    <strong>ntuLibrary</strong>
+    
 
-    <nav-bar></nav-bar>
-
+    <!-- <nav-bar></nav-bar> -->
+    <left-nav-bar></left-nav-bar>
     <div ng-view></div>
 
     <!-- build:js app.js -->
@@ -36,18 +36,23 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/angular-gestures/gestures.min.js"></script>
     <!-- endinject -->
 
     <!-- inject:js -->
     <script src="app.js"></script>
-    <script src="views/signup/signup.js"></script>
-    <script src="views/signup/signup.controller.js"></script>
-    <script src="views/login/login.js"></script>
-    <script src="views/login/login.controller.js"></script>
-    <script src="views/home/home.js"></script>
-    <script src="views/home/home.controller.js"></script>
-    <script src="services/auth/auth.js"></script>
     <script src="directives/nav-bar/nav-bar.directive.js"></script>
+    <script src="directives/left-nav-bar/left-nav-bar.directive.js"></script>
+    <script src="services/auth/auth.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/home/home.js"></script>
+    <script src="views/index/index.js"></script>
+    <script src="views/login/login.controller.js"></script>
+    <script src="views/login/login.js"></script>
+    <script src="views/signup/signup.controller.js"></script>
+    <script src="views/signup/signup.js"></script>
     <!-- endinject -->
 
     <!-- endbuild -->
