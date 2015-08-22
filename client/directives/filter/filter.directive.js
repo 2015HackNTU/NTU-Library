@@ -1,14 +1,19 @@
 'use strict';
 
 angular.module('ntuLibrary')
-  .controller('HomeCtrl', ['$scope',function ($scope) {
-
-    var vm = this;
+	.directive('filter', function () {
+    return {
+      restrict: 'E',
+      templateUrl: 'directives/filter/filter.html'
+    };
+  })
+	.controller('filterCtrl', ['$scope', function($scope){
+		var vm = this;
 
     angular.extend(vm, {
-      name: 'HomeCtrl'
+      name: 'filterCtrl'
     });
-    $scope.filterConstraint = [
+	  $scope.filterConstraint = [
 	    	{
 	    		"name":"電腦區域",
 	    		"enName":"Laptop Area",
@@ -73,5 +78,4 @@ angular.module('ntuLibrary')
   	    }
 
 	    ]
-
   }]);

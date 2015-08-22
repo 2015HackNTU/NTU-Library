@@ -1,50 +1,147 @@
-$mainFontColor : #405E6B;
+/* reset css */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
+html {
+	height: 100%;
+}
 
 body {
-	margin: 0 !important;
-  font-family: sans-serif;
+  	font-family: sans-serif;
+  	height: 100%;
+  	min-height: 100%;
 }
 
+
+/* variable */
+$mainFontColor: #405E6B;
+$FontColorGrey: #808E94;
+
 //*****************left-nav-bar*********************
-.container{
-	padding-top: 35px;
-	padding-left: 10px;
-}
-.subcontainer{
-	padding-top: 10px;
-	padding-left: 15px;
-	.number{
-		padding-left: 50px;
-	}
-}
-.laptopArea{
-	font-family: STHeitiTC-Medium;
-	font-size: 22px;
-	color: $mainFontColor;
-	line-height: 39px; 
-	text-align:center;
-}
-.title {
-	font-family: STHeitiTC-Medium;
-	font-size: 36px;
-	color: $mainFontColor;
-	line-height: 39px; 
-	text-align:center;
-}
-nav{
+
+.left-nav-bar{
+	position: absolute;
+	width: 370px;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+
 	background-color: #D7DADD;
-}
-map svg{
-	background-color: green;
-	width: 74%;
-}
-.leftSeat{
-	color: #8C8C8C;
-}
-.emptyRate{
-	color: #8C8C8C;
-}
 
+	.container{
+		padding-top: 35px;
+		text-align: center;
+		span{
+			display: inline-block;
+		}
+	}
+
+	.title{
+		font-family: STHeitiTC-Medium;
+		font-size: 38px;
+		color: $mainFontColor;
+		line-height: 39px; 
+		text-align:center;
+	}
+
+	.subcontainer{
+		padding-top: 10px;
+		text-align: center;
+		span{
+			display: inline-block;
+		}
+		.number{
+			margin-left: 130px;
+		}
+		.percent{
+			margin-left: 146px;
+		}
+		.laptopArea{
+			font-family: STHeitiTC-Medium;
+			font-size: 22px;
+			color: $mainFontColor;
+			line-height: 39px; 
+			float: left;
+			margin-left: 40px;
+			margin-right: 220px;
+		}
+		.en{
+			font-size: 15px;
+			line-height: 5px;
+		}
+		form{
+			font-family: STHeitiTC-Medium;
+			font-size: 18px;
+			color: $FontColorGrey;
+			float: left;
+			margin-left: 40px;
+			margin-top: 17px;
+			line-height: 23px;
+		}
+		
+	}
+
+
+}
 
 //*****************left-nav-bar*********************
+
+
+/* map */
+map{
+	background-color: green;
+	position: absolute;
+	overflow: hidden;
+	left: 370px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+map svg{
+	width: 100%;
+	height: 100%;
+
+}
+

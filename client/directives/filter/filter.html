@@ -1,0 +1,12 @@
+<div ng-controller="filterCtrl" ng-repeat="filterCategory in filterConstraint">
+	<div class="subcontainer">
+		<p class = "laptopArea">{{filterCategory.name}}</p>
+		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
+	</div>
+	<div class="subcontainer">
+		<form>
+			<input type = "checkbox">可以使用電腦/laptop allowed<br/>
+			<input type = "checkbox">不能使用電腦/laptop forbidden<br/>
+		</form>
+	</div>
+</div>

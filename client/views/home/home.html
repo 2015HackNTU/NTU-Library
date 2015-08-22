@@ -1,3 +1,30 @@
-<div>
-  {{ vm.name }}
+<div class="left-nav-bar">
+    <div class="container">
+    	<span class = "title">台灣大學圖書館</span>
+    	<span class = "title">自習室管理系統</span>
+    </div>
+    <div class="subcontainer">
+    	<sapn class = "leftSeat">剩餘空位</span>
+    	<span class = "leftSeat number">120</span>
+    </div>
+    <div class="subcontainer">
+    	<span class = "emptyRate">空位率</span>
+    	<span class = "emptyRate percent">30%</span>
+    </div>
+
+    <div ng-controller="HomeCtrl" ng-repeat="filterCategory in filterConstraint">
+    	<div class="subcontainer">
+    		<p class = "laptopArea">{{filterCategory.name}}</p>
+    		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
+    	</div>
+    	<div class="subcontainer">
+    		<form>
+    			<input type = "checkbox">可以使用電腦/laptop allowed<br/>
+    			<input type = "checkbox">不能使用電腦/laptop forbidden<br/>
+    		</form>
+    	</div>
+    </div>
 </div>
+
+ <map></map>
+ 
