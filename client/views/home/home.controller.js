@@ -1,6 +1,19 @@
 'use strict';
 
 angular.module('ntuLibrary')
+.directive('circle', function() {
+    return {
+        restrict: 'E',
+        link: function(scope, element, attrs) {
+            element.bind('click', function($event) {
+               	scope.showAlert($event);
+            });
+        }
+    }
+});
+
+
+angular.module('ntuLibrary')
   .controller('HomeCtrl', ['$scope','$http',function ($scope,$http) {
 
     var vm = this;
@@ -8,6 +21,7 @@ angular.module('ntuLibrary')
     angular.extend(vm, {
       name: 'HomeCtrl'
     });
+    
 
     $scope.filtercontraint = {
     	"laptop":[{
@@ -71,7 +85,7 @@ angular.module('ntuLibrary')
 
 		$http({
         	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
  			data.forEach(function(elem,i){
  				var query = "circle[id*="+elem+"]"
@@ -80,8 +94,7 @@ angular.module('ntuLibrary')
  					myEl[1].setAttribute("style","fill:#6DBD76;");
  				}
  			})
-
- 	// 		setLessSeat(data)
+ 			setLessSeat(data)
     		
     	});
 
@@ -123,8 +136,8 @@ angular.module('ntuLibrary')
 	};
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
-		$scope.selected_seat = selected[1];
-		console.log(selected[1]);
+		$scope.selected_seat = selected[0];
+		console.log(selected[0]);
 	}
 
 	$scope.deletefilter = function(){
@@ -163,7 +176,7 @@ angular.module('ntuLibrary')
 	}
 
 	function setID(area,num){
-		if (num > 9){
+		if (num < 9){
 			return area+"00"+num
 		}else if (num <= 99){
 			return area+"0"+num
@@ -174,7 +187,7 @@ angular.module('ntuLibrary')
 
 	function setLessSeat(data){
 		data.forEach(function (elem,i){
-			var query = "div[id*="+elem+"]"
+			var query = "circle[id*="+elem+"]"
  			var myEl = angular.element( document.querySelectorAll(query) );
  			if (myEl.length > 0){
  				var elementid = myEl[0].id;
@@ -227,12 +240,12 @@ angular.module('ntuLibrary')
  				if (count >= 2)
  					$scope.less_seat.push(elem)
 
- 			}else{
-
-			}
-
  			}
+ 		}else{
+ 			// console.log(elem)
+ 		}
 		})
+		console.log($scope.less_seat)
 		
 
 	}
