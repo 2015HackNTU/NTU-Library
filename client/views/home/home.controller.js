@@ -80,6 +80,7 @@ angular.module('ntuLibrary')
  					myEl[1].setAttribute("style","fill:#6DBD76;");
  				}
  			})
+
  	// 		setLessSeat(data)
     		
     	});
@@ -91,6 +92,7 @@ angular.module('ntuLibrary')
  	// 		$scope.emptyseat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
  	// 		$scope.ratio = Math.round($scope.emptyseat *10000 / $scope.allseat)/100;
   //   	});
+
 
 
 	}
