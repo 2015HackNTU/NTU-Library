@@ -11,9 +11,23 @@ body {
 	padding-top: 35px;
 	padding-left: 10px;
 }
-.title{
+.subcontainer{
+	padding-top: 10px;
+	padding-left: 15px;
+	.number{
+		padding-left: 50px;
+	}
+}
+.laptopArea{
 	font-family: STHeitiTC-Medium;
-	font-size: 38px;
+	font-size: 22px;
+	color: $mainFontColor;
+	line-height: 39px; 
+	text-align:center;
+}
+.title {
+	font-family: STHeitiTC-Medium;
+	font-size: 36px;
 	color: $mainFontColor;
 	line-height: 39px; 
 	text-align:center;
@@ -25,7 +39,12 @@ map svg{
 	background-color: green;
 	width: 74%;
 }
-
+.leftSeat{
+	color: #8C8C8C;
+}
+.emptyRate{
+	color: #8C8C8C;
+}
 
 
 //*****************left-nav-bar*********************
