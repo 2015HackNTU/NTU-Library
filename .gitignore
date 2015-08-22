@@ -4,3 +4,5 @@ client/styles/css
 .idea/
 dist/
 .sass-cache/
+.DS_Store
+server/.DS_Store
