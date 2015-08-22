@@ -69,22 +69,20 @@ angular.module('ntuLibrary')
 
     $scope.init = function(){
 
-		// $http({
-  //       	method: 'GET',
-  //        	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
-  //    	}).success(function(data){
- 	// 		data.forEach(function(elem,i){
- 	// 			var query = "div[id*="+elem+"]"
- 	// 			var myEl = angular.element( document.querySelectorAll(query) );
- 	// 			if (myEl.length > 0){
- 	// 				myEl[0].setAttribute("style", "background-color: red;");
- 	// 			}
- 	// 		})
+		$http({
+        	method: 'GET',
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
+     	}).success(function(data){
+ 			data.forEach(function(elem,i){
+ 				var query = "circle[id*="+elem+"]"
+ 				var myEl = angular.element( document.querySelectorAll(query) );
+ 				if (myEl.length > 0){
+ 					myEl[1].setAttribute("style","fill:#6DBD76;");
+ 				}
+ 			})
  	// 		setLessSeat(data)
-
     		
-    		
-  //   	});
+    	});
 
 		// $http({
   //       	method: 'GET',
@@ -93,15 +91,6 @@ angular.module('ntuLibrary')
  	// 		$scope.emptyseat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
  	// 		$scope.ratio = Math.round($scope.emptyseat *10000 / $scope.allseat)/100;
   //   	});
-		// var a = angular.element( document.getElementById('A137_com_cla_s6_3_') );
-		// console.log(a)
-		// a[0].setAttribute("isContentEditable":"true")
-		// var inner = a[0].contentDocument;
-		// console.log(inner)
-		var query = "circle[id*=A143_com_cla_s6]"
- 		var myEl = angular.element( document.querySelectorAll(query) );
- 		console.log(myEl)
- 		myEl[1].setAttribute("style","fill:#FF0000;")
 
 
 	}
