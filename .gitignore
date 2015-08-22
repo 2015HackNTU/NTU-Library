@@ -5,4 +5,4 @@ client/styles/css
 dist/
 .sass-cache/
 .DS_Store
-server/.DS_Store
+**/.DS_Store
