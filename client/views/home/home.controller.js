@@ -33,11 +33,13 @@ angular.module('ntuLibrary')
           [{
           id: "com",
           name: "可以使用電腦",
+          enName:"Laptop Allowed",
           selected: false
           },
           {
             id: "non-com",
           name: "不可以使用電腦",
+          enName:"Laptop Forbidden",
           selected: false
           }]
         },
@@ -47,18 +49,22 @@ angular.module('ntuLibrary')
           "filter":[{
             id: "less",
           name: "同桌人少",
+          enName: "Less People",
           selected: false
           },{
             id: "s4",
           name: "四人座",
+          enName: "4 People Table",
           selected: false
           },{
             id: "s6",
           name: "六人座",
+          enName: "6 People Table",
           selected: false
           },{
             id: "cla",
           name: "對面有隔板",
+          enName: "With Partition",
           selected: false
           }]
         },
@@ -69,22 +75,27 @@ angular.module('ntuLibrary')
           [{
             id: "win",
           name: "靠近窗邊",
+          enName: "Near Window",
           selected: false
           },{
             id: "wal",
           name: "靠近牆邊",
+          enName: "Near Wall",
           selected: false
           },{
             id: "ais",
           name: "遠離走道",
+          enName: "Far From Aisle",
           selected: false
           },{
             id: "t",
-          name: "靠近廁所",
+          name: "遠離廁所",
+          enName: "Far From Restroom",
           selected: false
           },{
             id: "r",
-          name: "靠近讀卡機",
+          name: "遠離讀卡機",
+          enName: "Far From Card Reader",
           selected: false
           }]
         }
@@ -92,13 +103,20 @@ angular.module('ntuLibrary')
       ]
 
     $scope.allseat = 828;
-    $scope.emptyseat = 0;
+    $scope.emptySeat = 0;
     $scope.ratio = 0;
     $scope.selected_seat;
     $scope.less_seat = [];
 
     $scope.init = function(){
 
+    $http({
+          method: 'GET',
+          url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
+      }).success(function(data){
+      $scope.emptySeat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
+      $scope.ratio = Math.round($scope.emptySeat *10000 / $scope.allseat)/100;
+      });
 		$http({
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
@@ -114,19 +132,17 @@ angular.module('ntuLibrary')
     		
     	});
 
-		// $http({
-  //       	method: 'GET',
-  //        	url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
-  //    	}).success(function(data){
- 	// 		$scope.emptyseat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
- 	// 		$scope.ratio = Math.round($scope.emptyseat *10000 / $scope.allseat)/100;
-  //   	});
+		
 
 
 
 	}
 
 	$scope.init();
+
+  $scope.filterSelected = function(e){
+    console.log(e + "is selected");
+  }
 
 	$scope.filter = function(){
 		var selected_constraint = ["com"];

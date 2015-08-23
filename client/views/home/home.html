@@ -1,31 +1,53 @@
-<div class="left-nav-bar">
+<div class="left-nav-bar" ng-controller="HomeCtrl">
     <div class="container">
     	<span class = "title">台灣大學圖書館</span>
     	<span class = "title">自習室管理系統</span>
     </div>
     <div class="subcontainer">
     	<sapn class = "leftSeat">剩餘空位</span>
-    	<span class = "leftSeat number">120</span>
+    	<span class = "leftSeat number">{{emptySeat}}</span>
     </div>
     <div class="subcontainer">
     	<span class = "emptyRate">空位率</span>
-    	<span class = "emptyRate percent">30%</span>
+    	<span class = "emptyRate percent">{{ratio}}%</span>
     </div>
 
-    <div ng-controller="HomeCtrl" ng-repeat="filterCategory in filterConstraint">
+    <div ng-repeat="filterCategory in filterConstraint">
     	<div class="subcontainer">
     		<p class = "laptopArea">{{filterCategory.name}}</p>
     		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
     	</div>
     	<div class="subcontainer">
-    		<form>
-    			<input type = "checkbox">可以使用電腦/laptop allowed<br/>
-    			<input type = "checkbox">不能使用電腦/laptop forbidden<br/>
+    		<form ng-repeat="filter in filterCategory.filter">
+    			<input type = "checkbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">{{filter.name}}/{{filter.enName}}<br/>
     		</form>
+    		
     	</div>
     </div>
     <button ng-click="filter()"></button>
 </div>
 
  <map></map>
+
+ <div class="inputId">
+ 	<div class="container">
+ 		<span class = "scanCard">刷卡輸入證號</span>
+ 		<span class = "en">Place ID card under the scanner</span>
+ 		<input type="text" focus-me="shouldBeOpen">
+ 	</div>
+ 	<div class="container">
+ 		<span class = "scanCard">選擇座位</span>
+ 		<span class = "en">Choose the seat</span>
+ 	</div>
+ 	<div class="container">
+ 		<span class = "seatId">A121</span>
+ 		<button type="button">清除/Clear</button>
+ 	</div>
+ </div>
+
+ <div class="notification">
+ 	<span class = "registerSuccess ">登記成功</span>
+ 	<span class = "registerSuccess">SUCCESS</span>
+ </div>
  
+
