@@ -103,7 +103,6 @@ angular.module('ntuLibrary')
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
-        console.log(data);
  			data.forEach(function(elem,i){
  				var query = "circle[id*="+elem+"]"
  				var myEl = angular.element( document.querySelectorAll(query) );
@@ -130,23 +129,26 @@ angular.module('ntuLibrary')
 	$scope.init();
 
 	$scope.filter = function(){
-		var selected_constraint = [];
+		var selected_constraint = ["com"];
  		//Check 哪些filter被選了
- 		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				if (elem.selected){
-					selected_constraint.push(elem.id);
-				}
-			})
-		})
+    $scope.filterConstraint.forEach(function (elem,i){
+      elem.filter.forEach(function (val,idx){
+        if (val.selected)
+          selected_constraint.push(val.id)
+      })
+    })
 
 
-		var query = "div[id*=cla]"
-		var myEl = angular.element( document.querySelectorAll(query) );
+		// var query = "circle[id*=cla]"
+		var myEl = angular.element( document.getElementsByTagName("circle") );
  		for (var i = 0; i < myEl.length;i++){
- 			if (myEl[i].id.indexOf("A11") >= 0){
- 				myEl[i].setAttribute("style", "background-color: green;");
- 			}
+ 			// if (myEl[i].id.indexOf("A11") >= 0){
+ 			// 	myEl[i].setAttribute("style", "background-color: green;");
+ 			// }
+      if (myEl[i].id.indexOf(selected_constraint[0]) < 0){
+        myEl[i].setAttribute("style", "opacity: 0.3;");
+      }
+          
  		}
 
 
@@ -158,10 +160,10 @@ angular.module('ntuLibrary')
 	}
 
 	$scope.deletefilter = function(){
-		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				elem.selected = false;
-			})
+		$scope.filterConstraint.forEach(function (elem,i){
+			elem.filter.forEach(function (val,idx){
+        val.selected = false;
+      })
 		})
 	}
 
