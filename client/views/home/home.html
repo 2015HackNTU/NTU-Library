@@ -18,9 +18,10 @@
     		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
     	</div>
     	<div class="subcontainer">
-    		<form ng-repeat="filter in filterCategory.filter">
-    			<input type = "checkbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">{{filter.name}}/{{filter.enName}}<br/>
-    		</form>
+    		<label ng-repeat="filter in filterCategory.filter">
+    			<input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">{{filter.name}}/{{filter.enName}}
+    			<br/>
+    		</label>
     		
     	</div>
     </div>
@@ -39,14 +40,29 @@
  		<span class = "en">Choose the seat</span>
  	</div>
  	<div class="container">
- 		<span class = "seatId">A121</span>
+ 		<span class = "seatId">{{selected_seat}}</span>
  		<button type="button">清除/Clear</button>
  	</div>
  </div>
 
  <div class="notification">
- 	<span class = "registerSuccess ">登記成功</span>
+ 	<span class = "registerSuccess zh-CN">登記成功</span>
  	<span class = "registerSuccess">SUCCESS</span>
+ 	<div class="containter top">
+ 		<span class="wrapper">
+	 		<span class="name zh-CN">李鹿尋</span>
+	 		<span class="seatIs">同學登記的座位為</span>
+ 		</span>
+ 	</div>
+ 	<div class="containter">
+ 		<span class="wrapper">
+	 		<span class="name en">B98705027,</span>
+	 		<span class="seatIs en">your seat number is</span>
+	 	</span>
+ 	</div>
+ 	<div class="container top">
+ 		<span class = "seatId">A121</span>
+ 	</div>
  </div>
  
 
