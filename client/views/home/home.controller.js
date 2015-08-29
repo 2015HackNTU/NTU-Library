@@ -105,7 +105,7 @@ angular.module('ntuLibrary')
     $scope.allseat = 828;
     $scope.emptySeat = 0;
     $scope.ratio = 0;
-    $scope.selected_seat;
+    $scope.selected_seat = "未選擇座位";
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -132,9 +132,6 @@ angular.module('ntuLibrary')
     		
     	});
 
-		
-
-
 
 	}
 
@@ -144,8 +141,15 @@ angular.module('ntuLibrary')
     console.log(e + "is selected");
   }
 
-	$scope.filter = function(){
-		var selected_constraint = ["com"];
+	$scope.setfilter = function(){
+    var myEl = angular.element( document.getElementsByTagName("circle") );
+    // for (var i = 0; i < myEl.length;i++){
+    //   myEl[i].setAttribute("style", "opacity: 1;");   
+    // }
+
+
+
+		var selected_constraint = [];
  		//Check 哪些filter被選了
     $scope.filterConstraint.forEach(function (elem,i){
       elem.filter.forEach(function (val,idx){
@@ -154,17 +158,21 @@ angular.module('ntuLibrary')
       })
     })
 
-
 		// var query = "circle[id*=cla]"
-		var myEl = angular.element( document.getElementsByTagName("circle") );
  		for (var i = 0; i < myEl.length;i++){
- 			// if (myEl[i].id.indexOf("A11") >= 0){
- 			// 	myEl[i].setAttribute("style", "background-color: green;");
- 			// }
-      if (myEl[i].id.indexOf(selected_constraint[0]) < 0){
-        myEl[i].setAttribute("style", "opacity: 0.3;");
-      }
-          
+      selected_constraint.forEach(function(elem){
+        if (elem == "non-com"){
+          if (myEl[i].id.indexOf("com") >= 0){
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+          }
+        }else if (elem == "t" || elem == "r"){
+          if (myEl[i].id.indexOf(elem) >= 0)
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+        }else{
+          if (myEl[i].id.indexOf(elem) < 0)
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+        }   
+      });     
  		}
 
 
@@ -172,7 +180,7 @@ angular.module('ntuLibrary')
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
 		$scope.selected_seat = selected[0];
-		console.log(selected[0]);
+		console.log($scope.selected_seat);
 	}
 
 	$scope.deletefilter = function(){
