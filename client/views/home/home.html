@@ -17,17 +17,16 @@
     </button>
 
     <div ng-repeat="filterCategory in filterConstraint">
-        <div class="subcontainer">
-            <p class = "laptopArea">{{filterCategory.name}}</p>
-            <p class = "laptopArea en">{{filterCategory.enName}}</p>    
-        </div>
+    	<div class="subcontainer">
+    		<p class = "laptopArea">{{filterCategory.name}}</p>
+    		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
+    	</div>
         <div class="subcontainer">
             <label ng-repeat="filter in filterCategory.filter">
-                <input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter)">
+                <input type = "checkbox" ng-model="filter.selected" ng-change="filterSelected(filter)">
                 <span>{{filter.name}}/{{filter.enName}}</span>
                 <br/>
-            </label>
-            
+            </label>    
         </div>
     </div>
 </div>
