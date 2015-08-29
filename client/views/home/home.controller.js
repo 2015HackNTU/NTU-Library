@@ -105,7 +105,10 @@ angular.module('ntuLibrary')
     $scope.allseat = 828;
     $scope.emptySeat = 0;
     $scope.ratio = 0;
-    $scope.selected_seat = "未選擇座位";
+    $scope.vacancySeat = [];
+
+    $scope.selected_seat = "尚未選擇";
+    $scope.isSelected = false;
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -121,6 +124,7 @@ angular.module('ntuLibrary')
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
+        $scope.vacancySeat = data
  			data.forEach(function(elem,i){
  				var query = "circle[id*="+elem+"]"
  				var myEl = angular.element( document.querySelectorAll(query) );

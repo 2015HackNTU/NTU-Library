@@ -48,7 +48,7 @@ html {
 }
 
 body {
-  	font-family: sans-serif;
+  	font-family: STHeitiTC-Medium,sans-serif;
   	height: 100%;
   	min-height: 100%;
 }
@@ -57,6 +57,13 @@ body {
 /* variable */
 $mainFontColor: #405E6B;
 $FontColorGrey: #808E94;
+$baseFontSize: 12;
+@function rem($val) {
+  @return #{$val / $baseFontSize}rem;
+}
+
+
+
 
 //*****************left-nav-bar*********************
 
@@ -115,7 +122,7 @@ $FontColorGrey: #808E94;
 			font-size: 15px;
 			line-height: 5px;
 		}
-		form{
+		label{
 			font-family: STHeitiTC-Medium;
 			font-size: 18px;
 			color: $FontColorGrey;
@@ -124,8 +131,53 @@ $FontColorGrey: #808E94;
 			margin-top: 5px;
 			line-height: 23px;
 		}
-		
 	}
+
+	.clearFilter{
+		background: #FD7A7A;
+		border: 1px solid #FD7A7A;
+		border-radius: 3px;
+		position: absolute;
+		top:170px;
+		left: 250px;
+		.clearFilter_zh-cn{
+			color: #FFF;
+			font-size: 12px;
+			display: block;
+		}
+		.clearFilter_en{
+			color: #FFF;
+			font-size: 9px;
+		}
+	}
+
+	.theCheckbox{
+
+		-webkit-appearance: none;
+		background-color: #fafafa;
+		border: 2px solid #979797;
+		box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+		padding: 9px;
+		border-radius: 0px;
+		display: inline-block;
+		position: relative;
+		vertical-align:middle;
+
+
+		&:checked{
+			// content: '\2713';
+			background-color: #fafafa;
+			background-image: radial-gradient(circle , #FBDA61 50%, #F9AF47 76%, #F76B1C 100%);
+		}
+		&:focus{
+		}
+	}
+
+	.theCheckbox:active, .theCheckbox:checked:active {
+		box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+	}
+
+	
 
 
 }
@@ -186,11 +238,19 @@ map svg{
 		height: 25px;
 		width: 200px;
 	}
-	.seatId{
+	.seatId_selected{
 		color: #6DBD76;
 		font-size: 40px;
 		display: block;
 		text-align: center;
+		margin-bottom: 20px;
+	}
+	.seatId_notSelected{
+		color: #646464;
+		font-size: 28px;
+		display: block;
+		text-align: center;
+		margin-bottom: 20px;
 	}
 	button{
 		background-color: #D65454;
@@ -209,19 +269,48 @@ map svg{
 //**************input id area***********************
 
 .notification{
+	display: none;
 	position: absolute;
 	top: 240px;
 	left: 500px;
 	width: 240px;
-	height: 240px;
+	height: 220px;
 	border-radius: 1px;
 	background: #444444;
 	border-radius: 4px;
+
+	.wrapper{
+		display: block;
+		text-align: center;
+	}
+	.top{
+		margin-top: 20px;
+	}
+
 	.registerSuccess{
 		font-family: STHeitiTC-Medium;
 		font-size: 20px;
 		color: #71FF7A;
 		line-height: 29px;
+		display: block;
+		text-align: center;
+	}
+	.zh-CN{
+		padding-top: 10px;
+	}
+	.en{
+		font-size: 14px;
+	}
+	.seatIs{
+		font-size: 14px;
+		color: #93DD98;
+	}
+	.name{
+		color: #C6C6C6;
+	}
+	.seatId{
+		color: #E4E4E4;
+		font-size: 40px;
 		display: block;
 		text-align: center;
 	}
