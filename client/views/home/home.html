@@ -11,6 +11,10 @@
     	<span class = "emptyRate">空位率</span>
     	<span class = "emptyRate percent">{{ratio}}%</span>
     </div>
+    <button class="clearFilter">
+        <span class = "clearFilter_zh-cn">清除篩選</span>
+        <span class = "clearFilter_en">Clear Filter</span>
+    </button>
 
     <div ng-repeat="filterCategory in filterConstraint">
     	<div class="subcontainer">
@@ -41,7 +45,8 @@
  		<span class = "en">Choose the seat</span>
  	</div>
  	<div class="container">
- 		<span class = "seatId">{{selected_seat}}</span>
+ 		<span class = "seatId_selected" ng-show="isSelected">{{selected_seat}}</span>
+        <span class = "seatId_notSelected" ng-show="!isSelected">{{selected_seat}}</span>
  		<button type="button">清除/Clear</button>
  	</div>
  </div>

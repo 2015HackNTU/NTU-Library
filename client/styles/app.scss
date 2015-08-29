@@ -48,7 +48,7 @@ html {
 }
 
 body {
-  	font-family: sans-serif;
+  	font-family: STHeitiTC-Medium,sans-serif;
   	height: 100%;
   	min-height: 100%;
 }
@@ -155,6 +155,24 @@ $baseFontSize: 12;
 		}
 	}
 
+	.clearFilter{
+		background: #FD7A7A;
+		border: 1px solid #FD7A7A;
+		border-radius: 3px;
+		position: absolute;
+		top:170px;
+		left: 250px;
+		.clearFilter_zh-cn{
+			color: #FFF;
+			font-size: 12px;
+			display: block;
+		}
+		.clearFilter_en{
+			color: #FFF;
+			font-size: 9px;
+		}
+	}
+
 	
 
 
@@ -216,11 +234,19 @@ map svg{
 		height: 25px;
 		width: 200px;
 	}
-	.seatId{
+	.seatId_selected{
 		color: #6DBD76;
 		font-size: 40px;
 		display: block;
 		text-align: center;
+		margin-bottom: 20px;
+	}
+	.seatId_notSelected{
+		color: #646464;
+		font-size: 28px;
+		display: block;
+		text-align: center;
+		margin-bottom: 20px;
 	}
 	button{
 		background-color: #D65454;

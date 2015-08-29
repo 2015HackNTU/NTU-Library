@@ -105,7 +105,8 @@ angular.module('ntuLibrary')
     $scope.allseat = 828;
     $scope.emptySeat = 0;
     $scope.ratio = 0;
-    $scope.selected_seat = "A122";
+    $scope.selected_seat = "尚未選擇";
+    $scope.isSelected = false;
     $scope.less_seat = [];
 
     $scope.init = function(){
