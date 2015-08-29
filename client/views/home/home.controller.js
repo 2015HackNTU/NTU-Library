@@ -206,15 +206,21 @@ angular.module('ntuLibrary')
     $scope.$apply(function(){
       $scope.selected_seat = selected[0];
     });
-		console.log($scope.selected_seat);
 	}
+  $scope.clearSelect = function(){
+    $scope.$apply(function(){
+      $scope.selected_seat = "尚未選擇";
+    });
+    console.log($scope.selected_seat);
+  }
 
 	$scope.deletefilter = function(){
 		$scope.filterConstraint.forEach(function (elem,i){
 			elem.filter.forEach(function (val,idx){
         val.selected = false;
       })
-		})
+		});
+    $scope.nowFilterSelcted = [];
 	}
 
 	$scope.submit = function(){
