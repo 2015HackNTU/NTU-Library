@@ -65,31 +65,24 @@ $baseFontSize: 12;
 
 .theCheckbox{
 
-	// cursor: pointer;
-	// position: relative;
-	// outline: none;
- //  width: 1rem;
- //  height: 1rem;
-	// background: #E2E2E2;
-	// border: 2px solid #979797;
 	-webkit-appearance: none;
 	background-color: #fafafa;
-	border: 1px solid #3498db;
+	border: 2px solid #979797;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
 	padding: 9px;
 	border-radius: 0px;
 	display: inline-block;
 	position: relative;
+	vertical-align:middle;
+
+	&:checked{
+		// content: '\2713';
+		font-size: 14px;
+		background-color: #fafafa;
+		background-image: radial-gradient(circle , #FBDA61 50%, #F9AF47 76%, #F76B1C 100%);
+	}
 }
 
-.theCheckbox:checked:after {
-	content: '\2714';
-	font-size: 14px;
-	position: absolute;
-	top: 0px;
-	left: 3px;
-	color: #99a1a7;
-}
 .theCheckbox:active, .theCheckbox:checked:active {
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
 }
@@ -246,6 +239,7 @@ map svg{
 //**************input id area***********************
 
 .notification{
+	display: none;
 	position: absolute;
 	top: 240px;
 	left: 500px;

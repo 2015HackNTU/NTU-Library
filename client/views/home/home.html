@@ -19,7 +19,8 @@
     	</div>
     	<div class="subcontainer">
     		<label ng-repeat="filter in filterCategory.filter">
-    			<input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">{{filter.name}}/{{filter.enName}}
+    			<input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">
+                <span>{{filter.name}}/{{filter.enName}}</span>
     			<br/>
     		</label>
     		
@@ -33,7 +34,7 @@
  	<div class="container">
  		<span class = "scanCard">刷卡輸入證號</span>
  		<span class = "en">Place ID card under the scanner</span>
- 		<input type="text" focus-me="shouldBeOpen">
+ 		<input type="text" focus-me="shouldBeOpen" autofocus>
  	</div>
  	<div class="container">
  		<span class = "scanCard">選擇座位</span>
