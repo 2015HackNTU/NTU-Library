@@ -105,6 +105,9 @@ angular.module('ntuLibrary')
     $scope.allseat = 828;
     $scope.emptySeat = 0;
     $scope.ratio = 0;
+    $scope.vacancySeat = [];
+    $scope.nowFilterSelcted = [];
+
     $scope.selected_seat = "尚未選擇";
     $scope.isSelected = false;
     $scope.less_seat = [];
@@ -122,63 +125,81 @@ angular.module('ntuLibrary')
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
-        // console.log(data);
- 			data.forEach(function(elem,i){
- 				var query = "circle[id*="+elem+"]"
- 				var myEl = angular.element( document.querySelectorAll(query) );
- 				if (myEl.length > 0){
- 					myEl[0].setAttribute("style","fill:#6DBD76;");
- 				}
- 			})
- 			setLessSeat(data)
+        $scope.vacancySeat = data
+ 			  data.forEach(function(elem,i){
+ 			  	var query = "circle[id*="+elem+"]"
+ 			  	var myEl = angular.element( document.querySelectorAll(query) );
+ 			  	if (myEl.length > 0){
+ 			  		myEl[0].setAttribute("style","fill:#6DBD76;");
+ 			  	}
+ 			  })
+ 			  setLessSeat(data)
     		
     	});
-
-		
-
-
 
 	}
 
 	$scope.init();
 
   $scope.filterSelected = function(e){
-    console.log(e + "is selected");
+    if (e.selected)
+      $scope.nowFilterSelcted.push(e.id);
+    else{
+      var index = $scope.nowFilterSelcted.indexOf(e.id)
+      $scope.nowFilterSelcted.splice(index,1);
+    }
+    setfilter();
   }
 
-	$scope.filter = function(){
+	$scope.setfilter = function(){
+    var myEl = angular.element( document.getElementsByTagName("circle") );
+    // for (var i = 0; i < myEl.length;i++){
+    //   myEl[i].setAttribute("style", "opacity: 1;");   
+    // }
+
+
+
 		var selected_constraint = [];
  		//Check 哪些filter被選了
- 		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				if (elem.selected){
-					selected_constraint.push(elem.id);
-				}
-			})
-		})
+    $scope.filterConstraint.forEach(function (elem,i){
+      elem.filter.forEach(function (val,idx){
+        if (val.selected)
+          selected_constraint.push(val.id)
+      })
+    })
 
-
-		var query = "div[id*=cla]"
-		var myEl = angular.element( document.querySelectorAll(query) );
+		// var query = "circle[id*=cla]"
  		for (var i = 0; i < myEl.length;i++){
- 			if (myEl[i].id.indexOf("A11") >= 0){
- 				myEl[i].setAttribute("style", "background-color: green;");
- 			}
+      selected_constraint.forEach(function(elem){
+        if (elem == "non-com"){
+          if (myEl[i].id.indexOf("com") >= 0){
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+          }
+        }else if (elem == "t" || elem == "r"){
+          if (myEl[i].id.indexOf(elem) >= 0)
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+        }else{
+          if (myEl[i].id.indexOf(elem) < 0)
+            myEl[i].setAttribute("style", "opacity: 0.3;");
+        }   
+      });     
  		}
 
 
 	};
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
-		$scope.selected_seat = selected[0];
-		console.log(selected[0]);
+    $scope.$apply(function(){
+      $scope.selected_seat = selected[0];
+    });
+		console.log($scope.selected_seat);
 	}
 
 	$scope.deletefilter = function(){
-		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				elem.selected = false;
-			})
+		$scope.filterConstraint.forEach(function (elem,i){
+			elem.filter.forEach(function (val,idx){
+        val.selected = false;
+      })
 		})
 	}
 

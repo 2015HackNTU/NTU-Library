@@ -6,6 +6,6 @@ var controller = require('./user.controller');
 var auth = require('../../auth/auth.service');
 
 router.get('/me', auth.isAuthenticated(), controller.getMe);
-router.post('/', controller.create);
+router.post('/create', controller.create);
 
 module.exports = router;
