@@ -14,7 +14,7 @@ angular.module('ntuLibrary')
 
 
 angular.module('ntuLibrary')
-  .controller('HomeCtrl', ['$scope','$http',function ($scope,$http) {
+  .controller('HomeCtrl', ['$scope','$http','$timeout',function ($scope,$http,$timeout) {
 
 
     var vm = this;
@@ -201,17 +201,22 @@ angular.module('ntuLibrary')
 
 
 	};
+  
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
-    $scope.$apply(function(){
-      $scope.selected_seat = selected[0];
-    });
+    // change(selected[0]);
+    // $scope.$apply(function(){
+      // $scope.selected_seat = selected[0];
+    // });
+    $timeout(function(){
+      $scope.selected_seat = selected[0]; 
+    },100)
 	}
   $scope.clearSelect = function(){
-    $scope.$apply(function(){
-      $scope.selected_seat = "尚未選擇";
-    });
-    console.log($scope.selected_seat);
+    // change("尚未選擇")
+    $timeout(function(){
+      $scope.selected_seat = "尚未選擇"; 
+    },100)
   }
 
 	$scope.deletefilter = function(){
@@ -222,6 +227,13 @@ angular.module('ntuLibrary')
 		});
     $scope.nowFilterSelcted = [];
 	}
+
+  // function change(str){
+    // $scope.$apply(function(){
+    //   $scope.selected_seat = str;
+    // });
+  // }
+
 
 	$scope.submit = function(){
 
