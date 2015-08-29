@@ -106,6 +106,7 @@ angular.module('ntuLibrary')
     $scope.emptySeat = 0;
     $scope.ratio = 0;
     $scope.vacancySeat = [];
+    $scope.nowFilterSelcted = [];
 
     $scope.selected_seat = "尚未選擇";
     $scope.isSelected = false;
@@ -125,24 +126,29 @@ angular.module('ntuLibrary')
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
         $scope.vacancySeat = data
- 			data.forEach(function(elem,i){
- 				var query = "circle[id*="+elem+"]"
- 				var myEl = angular.element( document.querySelectorAll(query) );
- 				if (myEl.length > 0){
- 					myEl[0].setAttribute("style","fill:#6DBD76;");
- 				}
- 			})
- 			setLessSeat(data)
+ 			  data.forEach(function(elem,i){
+ 			  	var query = "circle[id*="+elem+"]"
+ 			  	var myEl = angular.element( document.querySelectorAll(query) );
+ 			  	if (myEl.length > 0){
+ 			  		myEl[0].setAttribute("style","fill:#6DBD76;");
+ 			  	}
+ 			  })
+ 			  setLessSeat(data)
     		
     	});
-
 
 	}
 
 	$scope.init();
 
   $scope.filterSelected = function(e){
-    console.log(e + "is selected");
+    if (e.selected)
+      $scope.nowFilterSelcted.push(e.id);
+    else{
+      var index = $scope.nowFilterSelcted.indexOf(e.id)
+      $scope.nowFilterSelcted.splice(index,1);
+    }
+    setfilter();
   }
 
 	$scope.setfilter = function(){
@@ -183,7 +189,9 @@ angular.module('ntuLibrary')
 	};
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
-		$scope.selected_seat = selected[0];
+    $scope.$apply(function(){
+      $scope.selected_seat = selected[0];
+    });
 		console.log($scope.selected_seat);
 	}
 

@@ -23,7 +23,7 @@
         </div>
         <div class="subcontainer">
             <label ng-repeat="filter in filterCategory.filter">
-                <input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">
+                <input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter)">
                 <span>{{filter.name}}/{{filter.enName}}</span>
                 <br/>
             </label>
