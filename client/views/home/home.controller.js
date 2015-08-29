@@ -125,7 +125,7 @@ angular.module('ntuLibrary')
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
-        $scope.vacancySeat = data
+        $scope.vacancySeat = data;
  			  data.forEach(function(elem,i){
  			  	var query = "circle[id*="+elem+"]"
  			  	var myEl = angular.element( document.querySelectorAll(query) );
@@ -151,39 +151,53 @@ angular.module('ntuLibrary')
     setfilter();
   }
 
-	$scope.setfilter = function(){
+	function setfilter(){
     var myEl = angular.element( document.getElementsByTagName("circle") );
-    // for (var i = 0; i < myEl.length;i++){
-    //   myEl[i].setAttribute("style", "opacity: 1;");   
-    // }
+    var match = true;
+    for (var i = 0; i < myEl.length;i++){
+      var Seat = myEl[i].id.split("_");
+      var Seatid = Seat[0];
+      match = true;
 
-
-
-		var selected_constraint = [];
- 		//Check 哪些filter被選了
-    $scope.filterConstraint.forEach(function (elem,i){
-      elem.filter.forEach(function (val,idx){
-        if (val.selected)
-          selected_constraint.push(val.id)
-      })
-    })
-
-		// var query = "circle[id*=cla]"
- 		for (var i = 0; i < myEl.length;i++){
-      selected_constraint.forEach(function(elem){
-        if (elem == "non-com"){
-          if (myEl[i].id.indexOf("com") >= 0){
-            myEl[i].setAttribute("style", "opacity: 0.3;");
+      for (var j = 0; j < $scope.nowFilterSelcted.length; j++){
+        if ($scope.nowFilterSelcted[j] == 'non-com'){
+          if (myEl[i].id.indexOf('com') >= 0){
+            match = false;
+            break;
           }
-        }else if (elem == "t" || elem == "r"){
-          if (myEl[i].id.indexOf(elem) >= 0)
-            myEl[i].setAttribute("style", "opacity: 0.3;");
+        }else if ($scope.nowFilterSelcted[j] == 'r' || $scope.nowFilterSelcted[j] == 't'){
+          if (myEl[i].id.indexOf($scope.nowFilterSelcted[j]) >= 0){
+            match = false;
+            break;
+          }
+        }else if ($scope.nowFilterSelcted[j] == 'less'){
+          if ($scope.less_seat.indexOf(Seatid) < 0){
+            match = false;
+            break;
+          }
         }else{
-          if (myEl[i].id.indexOf(elem) < 0)
-            myEl[i].setAttribute("style", "opacity: 0.3;");
-        }   
-      });     
- 		}
+          if (myEl[i].id.indexOf($scope.nowFilterSelcted[j]) < 0){
+            match = false;
+            break;
+          }
+        }
+
+      }
+      if ($scope.vacancySeat.indexOf(Seatid) >= 0){
+        if (match){
+          myEl[i].setAttribute("style", "opacity: 1; fill#6DBD76;"); 
+        }else{
+          myEl[i].setAttribute("style", "opacity: 0.1; fill#6DBD76;"); 
+        }
+      }else{
+        if (match){
+          myEl[i].setAttribute("style", "opacity: 1; fill#D65454;"); 
+        }else{
+          myEl[i].setAttribute("style", "opacity: 0.1; fill#D65454;"); 
+        }
+
+      }  
+    }
 
 
 	};
