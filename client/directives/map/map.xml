@@ -12,7 +12,7 @@
 	.st6{opacity:1;fill:#D65454;stroke-miterlimit:10;enable-background:new    ;}
 	.st7{opacity:1;fill:#D65454;stroke-miterlimit:10;}
 	.st8{fill:#D65454;stroke-miterlimit:10;}
-	.st9{fill:#A5A4A4;}
+	.st9{opacity:0.5;fill:#A5A4A4;}
 	.st10{fill:url(#SVGID_1_);}
 	.st11{fill:url(#SVGID_2_);}
 	.st12{fill:url(#SVGID_3_);}
