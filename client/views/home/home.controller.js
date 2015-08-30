@@ -109,7 +109,6 @@ angular.module('ntuLibrary')
     $scope.nowFilterSelcted = [];
 
     $scope.selected_seat = "尚未選擇";
-    $scope.isSelected = false;
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -123,7 +122,7 @@ angular.module('ntuLibrary')
       });
 		$http({
         	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
      	}).success(function(data){
         $scope.vacancySeat = data
  			  data.forEach(function(elem,i){
