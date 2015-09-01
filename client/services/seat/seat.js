@@ -5,13 +5,15 @@ angular.module('ntuLibrary')
 
     this.getHistory = function(user){
       $http({
-        method: 'GET',
+        method: 'POST',
         url: './api/seat/getHistory',
         data: {
           userid: user
         }
       }).success(function(data){
-        console.log(data) 
+        data.forEach(function (elem,i){
+          console.log(elem.userID, elem.seat, elem.endTime);
+        })
       });
     };
 
@@ -28,7 +30,7 @@ angular.module('ntuLibrary')
           end: endTime
         }
       }).success(function(data){
-        console.log(data) 
+        console.log(data);
       });
     };
 

@@ -104,6 +104,7 @@ angular.module('ntuLibrary')
 
     $scope.allseat = 828;
     $scope.emptySeat = 0;
+    $scope.userid = "";
     $scope.ratio = 0;
     $scope.vacancySeat = [];
     $scope.nowFilterSelcted = [];
@@ -264,10 +265,11 @@ angular.module('ntuLibrary')
   $scope.submit = function(){
     var endDate = new Date();
     var startDate = new Date(Date.parse(endDate) - 3600000*2);
-    Seat.create("B01705001","A001",startDate,endDate);
+    Seat.create($scope.userid,$scope.selected_seat,startDate,endDate);
+
   };
   $scope.getHistory = function(){
-    Seat.getHistory("B01705001")
+    Seat.getHistory($scope.userid);
   }
 
 

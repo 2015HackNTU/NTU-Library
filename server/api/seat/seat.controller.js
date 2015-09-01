@@ -37,17 +37,20 @@ exports.create = function (req, res) {
  * @param res
  */
 exports.getSeat = function (req, res) {
-  Seat.findOne({
-    userid: req.body.userid
-  }, function (err, row) {
-    if (err){ 
-    	return handleError(res, err); 
-    }
-    if (!row){
-    	return res.json(401);
-    }
-    res.status(200).json(row);
-  });
+	var query = Seat.find({
+		userID: req.body.userid
+	});
+	query.limit(5);
+	query.sort({endTime : 'desc'});
+	query.exec(function (err, row) {
+    	if (err){ 
+    		return handleError(res, err); 
+    	}
+    	if (!row){
+    		return res.json(401);
+    	}
+    	res.status(200).json(row);
+  	})
 };
 
 
