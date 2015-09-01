@@ -14,7 +14,7 @@ angular.module('ntuLibrary')
 
 
 angular.module('ntuLibrary')
-  .controller('HomeCtrl', ['$scope','$http',function ($scope,$http) {
+  .controller('HomeCtrl', ['$scope','$http','$timeout',function ($scope,$http,$timeout) {
 
 
     var vm = this;
@@ -105,7 +105,10 @@ angular.module('ntuLibrary')
     $scope.allseat = 828;
     $scope.emptySeat = 0;
     $scope.ratio = 0;
-    $scope.selected_seat = "A122";
+    $scope.vacancySeat = [];
+    $scope.nowFilterSelcted = [];
+    $scope.isSelected = false;
+    $scope.selected_seat = "尚未選擇";
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -115,71 +118,123 @@ angular.module('ntuLibrary')
           url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
       }).success(function(data){
       $scope.emptySeat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
-      $scope.ratio = Math.round($scope.emptySeat *10000 / $scope.allseat)/100;
+      $scope.ratio = (Math.round($scope.emptySeat *10000 / $scope.allseat)/100).toFixed(1);
       });
 		$http({
         	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
      	}).success(function(data){
-        // console.log(data);
- 			data.forEach(function(elem,i){
- 				var query = "circle[id*="+elem+"]"
- 				var myEl = angular.element( document.querySelectorAll(query) );
- 				if (myEl.length > 0){
- 					myEl[0].setAttribute("style","fill:#6DBD76;");
- 				}
- 			})
- 			setLessSeat(data)
+        $scope.vacancySeat = data;
+ 			  data.forEach(function(elem,i){
+ 			  	var query = "circle[id*="+elem+"]"
+ 			  	var myEl = angular.element( document.querySelectorAll(query) );
+ 			  	if (myEl.length > 0){
+ 			  		myEl[0].setAttribute("style","fill:#6DBD76;");
+ 			  	}
+ 			  })
+ 			  setLessSeat(data)
     		
     	});
-
-		
-
-
 
 	}
 
 	$scope.init();
 
   $scope.filterSelected = function(e){
-    console.log(e + "is selected");
+    if (e.selected)
+      $scope.nowFilterSelcted.push(e.id);
+    else{
+      var index = $scope.nowFilterSelcted.indexOf(e.id)
+      $scope.nowFilterSelcted.splice(index,1);
+    }
+    setfilter();
   }
 
-	$scope.filter = function(){
-		var selected_constraint = [];
- 		//Check 哪些filter被選了
- 		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				if (elem.selected){
-					selected_constraint.push(elem.id);
-				}
-			})
-		})
+	function setfilter(){
+    var myEl = angular.element( document.getElementsByTagName("circle") );
+    var match = true;
+    for (var i = 0; i < myEl.length;i++){
+      var Seat = myEl[i].id.split("_");
+      var Seatid = Seat[0];
+      match = true;
 
+      for (var j = 0; j < $scope.nowFilterSelcted.length; j++){
+        if ($scope.nowFilterSelcted[j] == 'non-com'){
+          if (myEl[i].id.indexOf('com') >= 0){
+            match = false;
+            break;
+          }
+        }else if ($scope.nowFilterSelcted[j] == 'r' || $scope.nowFilterSelcted[j] == 't'){
+          if (myEl[i].id.indexOf($scope.nowFilterSelcted[j]) >= 0){
+            match = false;
+            break;
+          }
+        }else if ($scope.nowFilterSelcted[j] == 'less'){
+          if ($scope.less_seat.indexOf(Seatid) < 0){
+            match = false;
+            break;
+          }
+        }else{
+          if (myEl[i].id.indexOf($scope.nowFilterSelcted[j]) < 0){
+            match = false;
+            break;
+          }
+        }
 
-		var query = "div[id*=cla]"
-		var myEl = angular.element( document.querySelectorAll(query) );
- 		for (var i = 0; i < myEl.length;i++){
- 			if (myEl[i].id.indexOf("A11") >= 0){
- 				myEl[i].setAttribute("style", "background-color: green;");
- 			}
- 		}
+      }
+      if ($scope.vacancySeat.indexOf(Seatid) >= 0){
+        if (match){
+          myEl[i].setAttribute("style", "opacity: 1; fill#6DBD76;"); 
+        }else{
+          myEl[i].setAttribute("style", "opacity: 0.1; fill#6DBD76;"); 
+        }
+      }else{
+        if (match){
+          myEl[i].setAttribute("style", "opacity: 1; fill#D65454;"); 
+        }else{
+          myEl[i].setAttribute("style", "opacity: 0.1; fill#D65454;"); 
+        }
+
+      }  
+    }
 
 
 	};
+  
 	$scope.showAlert = function(event){
 		var selected = event.target.id.split('_');
-		$scope.selected_seat = selected[0];
-		console.log(selected[0]);
+    // change(selected[0]);
+    // $scope.$apply(function(){
+      // $scope.selected_seat = selected[0];
+    // });
+    $timeout(function(){
+      $scope.isSelected = true;
+      $scope.selected_seat = selected[0]; 
+    },100)
 	}
+  $scope.clearSelect = function(){
+    // change("尚未選擇")
+    $timeout(function(){
+      $scope.isSelected = false;
+      $scope.selected_seat = "尚未選擇"; 
+    },100)
+  }
 
 	$scope.deletefilter = function(){
-		angular.forEach($scope.filtercontraint,function(val){
-			val.forEach(function (elem,i){
-				elem.selected = false;
-			})
-		})
+		$scope.filterConstraint.forEach(function (elem,i){
+			elem.filter.forEach(function (val,idx){
+        val.selected = false;
+      })
+		});
+    $scope.nowFilterSelcted = [];
 	}
+
+  // function change(str){
+    // $scope.$apply(function(){
+    //   $scope.selected_seat = str;
+    // });
+  // }
+
 
 	$scope.submit = function(){
 
@@ -282,5 +337,8 @@ angular.module('ntuLibrary')
 		
 
 	}
+  function setDisplay(){
+    return { display: "block" };  
+  }
 
   }]);

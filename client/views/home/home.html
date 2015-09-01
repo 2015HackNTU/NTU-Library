@@ -1,68 +1,77 @@
 <div class="left-nav-bar" ng-controller="HomeCtrl">
     <div class="container">
-    	<span class = "title">台灣大學圖書館</span>
-    	<span class = "title">自習室管理系統</span>
+        <span class = "title">台灣大學圖書館</span>
+        <span class = "title">自習室管理系統</span>
     </div>
     <div class="subcontainer">
-    	<sapn class = "leftSeat">剩餘空位</span>
-    	<span class = "leftSeat number">{{emptySeat}}</span>
+        <sapn class = "leftSeat">剩餘空位</span>
+        <span class = "leftSeat number">{{emptySeat}}</span>
     </div>
     <div class="subcontainer">
-    	<span class = "emptyRate">空位率</span>
-    	<span class = "emptyRate percent">{{ratio}}%</span>
+        <span class = "emptyRate">空位率</span>
+        <span class = "emptyRate percent">{{ratio}}%</span>
     </div>
+    <button class="clearFilter">
+        <span class = "clearFilter_zh-cn">清除篩選</span>
+        <span class = "clearFilter_en">Clear Filter</span>
+    </button>
 
     <div ng-repeat="filterCategory in filterConstraint">
     	<div class="subcontainer">
     		<p class = "laptopArea">{{filterCategory.name}}</p>
     		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
     	</div>
-    	<div class="subcontainer">
-    		<label ng-repeat="filter in filterCategory.filter">
-    			<input type = "checkbox" class="theCheckbox" ng-model="filter.selected" ng-change="filterSelected(filter.name)">{{filter.name}}/{{filter.enName}}
-    			<br/>
-    		</label>
-    		
-    	</div>
+        <div class="subcontainer">
+            <label ng-repeat="filter in filterCategory.filter">
+                <input type = "checkbox" ng-model="filter.selected" ng-change="filterSelected(filter)">
+                <span>{{filter.name}}/{{filter.enName}}</span>
+                <br/>
+            </label>    
+        </div>
     </div>
 </div>
 
  <map></map>
 
- <div class="inputId">
- 	<div class="container">
- 		<span class = "scanCard">刷卡輸入證號</span>
- 		<span class = "en">Place ID card under the scanner</span>
- 		<input type="text" focus-me="shouldBeOpen">
- 	</div>
- 	<div class="container">
- 		<span class = "scanCard">選擇座位</span>
- 		<span class = "en">Choose the seat</span>
- 	</div>
- 	<div class="container">
- 		<span class = "seatId">{{selected_seat}}</span>
- 		<button type="button">清除/Clear</button>
- 	</div>
- </div>
+<div class="inputId">
+<div class="container">
+    <span class = "scanCard">刷卡輸入證號</span>
+    <span class = "en">Place ID card under the scanner</span>
+    <input type="text" focus-me="shouldBeOpen" autofocus>
+</div>
+<div class="container">
+    <span class = "scanCard">選擇座位</span>
+    <span class = "en">Choose the seat</span>
+</div>
+<div class="container">
+    <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span>
+    <button type="button" class="choose" ng-click="">確認/Submit</button>
+    <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
+</div>
+</div>
 
- <div class="notification">
- 	<span class = "registerSuccess zh-CN">登記成功</span>
- 	<span class = "registerSuccess">SUCCESS</span>
- 	<div class="containter top">
- 		<span class="wrapper">
-	 		<span class="name zh-CN">李鹿尋</span>
-	 		<span class="seatIs">同學登記的座位為</span>
- 		</span>
- 	</div>
- 	<div class="containter">
- 		<span class="wrapper">
-	 		<span class="name en">B98705027,</span>
-	 		<span class="seatIs en">your seat number is</span>
-	 	</span>
- 	</div>
- 	<div class="container top">
- 		<span class = "seatId">A121</span>
- 	</div>
- </div>
- 
+<div class="container_history"></div>
 
+ <div class="notification" ng-style="setDisplay()">
+    <span class = "registerSuccess zh-CN">登記成功</span>
+    <span class = "registerSuccess">SUCCESS</span>
+    <div class="containter top">
+        <span class="wrapper">
+            <span class="name zh-CN">李鹿尋</span>
+            <span class="seatIs">同學登記的座位為</span>
+        </span>
+    </div>
+    <div class="containter">
+        <span class="wrapper">
+            <span class="name en">B98705027,</span>
+            <span class="seatIs en">your seat number is</span>
+        </span>
+    </div>
+    <div class="container top">
+        <span class = "seatId">A121</span>
+    </div>
+ </div>
+ <div class="errorMsg">
+    <span class = "msg1">尚未輸入學生證號</span>
+    <span class = "msg2">尚未選擇座位</span>
+ </div>
