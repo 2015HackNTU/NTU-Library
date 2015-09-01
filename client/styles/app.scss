@@ -93,13 +93,18 @@ $baseFontSize: 12;
 	}
 
 	.subcontainer{
-		padding-top: 10px;
+		padding-top: 5px;
 		text-align: center;
 		span{
 			display: inline-block;
 		}
 		.leftSeat{
-			
+			font-size: 16px;
+			color: #8C8C8C;
+		}
+		.emptyRate{
+			font-size: 16px;
+			color: #8C8C8C;
 		}
 		.number{
 			margin-left: 130px;
@@ -138,7 +143,7 @@ $baseFontSize: 12;
 		border: 1px solid #FD7A7A;
 		border-radius: 3px;
 		position: absolute;
-		top:170px;
+		top:160px;
 		left: 250px;
 		.clearFilter_zh-cn{
 			color: #FFF;
@@ -400,3 +405,4 @@ map svg{
 }
 
 //**************errorMsg****************************
+
