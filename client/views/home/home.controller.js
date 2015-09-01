@@ -14,7 +14,7 @@ angular.module('ntuLibrary')
 
 
 angular.module('ntuLibrary')
-  .controller('HomeCtrl', ['$scope','$http','$timeout',function ($scope,$http,$timeout) {
+  .controller('HomeCtrl', ['$scope','$http','$timeout','Seat',function ($scope,$http,$timeout,Seat) {
 
 
     var vm = this;
@@ -122,11 +122,11 @@ angular.module('ntuLibrary')
       });
 		$http({
         	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
      	}).success(function(data){
         $scope.vacancySeat = data;
  			  data.forEach(function(elem,i){
- 			  	var query = "circle[id*="+elem+"]"
+ 			  	var query = "circle[id*="+elem+"]";
  			  	var myEl = angular.element( document.querySelectorAll(query) );
  			  	if (myEl.length > 0){
  			  		myEl[0].setAttribute("style","fill:#6DBD76;");
@@ -184,15 +184,15 @@ angular.module('ntuLibrary')
       }
       if ($scope.vacancySeat.indexOf(Seatid) >= 0){
         if (match){
-          myEl[i].setAttribute("style", "opacity: 1; fill#6DBD76;"); 
+          myEl[i].setAttribute("style", "opacity: 1; fill:#6DBD76;"); 
         }else{
-          myEl[i].setAttribute("style", "opacity: 0.1; fill#6DBD76;"); 
+          myEl[i].setAttribute("style", "opacity: 0.1; fill:#6DBD76;"); 
         }
       }else{
         if (match){
-          myEl[i].setAttribute("style", "opacity: 1; fill#D65454;"); 
+          myEl[i].setAttribute("style", "opacity: 1; fill:#D65454;"); 
         }else{
-          myEl[i].setAttribute("style", "opacity: 0.1; fill#D65454;"); 
+          myEl[i].setAttribute("style", "opacity: 0.1; fill:#D65454;"); 
         }
 
       }  
@@ -220,48 +220,56 @@ angular.module('ntuLibrary')
     },100)
   }
 
-	$scope.deletefilter = function(){
+	$scope.deleteFilter = function(){
+    console.log("Hi")
 		$scope.filterConstraint.forEach(function (elem,i){
 			elem.filter.forEach(function (val,idx){
         val.selected = false;
       })
 		});
     $scope.nowFilterSelcted = [];
+    setfilter();
 	}
 
-  // function change(str){
-    // $scope.$apply(function(){
-    //   $scope.selected_seat = str;
-    // });
-  // }
 
 
-	$scope.submit = function(){
+	// $scope.submit = function(){
 
-		$http({
-        	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/checkUser?user_id=' + userid
-     	}).success(function(res){
- 			if (!res.authority){			//Check Fail
- 				console.log(res.message);	
- 			}else{							//Check Access
- 				console.log(res.token);
- 				$http({
-        			method: 'GET',
-         			url: 'http://140.112.113.35:8080/StudyRoom/api/checkin?user_id='+userid+'&token='+res.token
-     			}).success(function(res){
- 					if (res.affected){		//Success
+	// 	$http({
+ //        	method: 'GET',
+ //         	url: 'http://140.112.113.35:8080/StudyRoom/api/checkUser?user_id=' + userid
+ //     	}).success(function(res){
+ // 			if (!res.authority){			//Check Fail
+ // 				console.log(res.message);	
+ // 			}else{							//Check Access
+ // 				console.log(res.token);
+ // 				$http({
+ //        			method: 'GET',
+ //         			url: 'http://140.112.113.35:8080/StudyRoom/api/checkin?user_id='+userid+'&token='+res.token
+ //     			}).success(function(res){
+ // 					if (res.affected){		//Success
 
- 					}else{					//Fail
+ // 					}else{					//Fail
 
- 					}
-    			});
+ // 					}
+ //    			});
 
- 			}
+ // 			}
 
-    	});
+ //    	});
 
-	}
+	// }
+
+
+  $scope.submit = function(){
+    var endDate = new Date();
+    var startDate = new Date(Date.parse(endDate) - 3600000*2);
+    Seat.create("B01705001","A001",startDate,endDate);
+  };
+  $scope.getHistory = function(){
+    Seat.getHistory("B01705001")
+  }
+
 
 	function setID(area,num){
 		if (num < 9){

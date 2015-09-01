@@ -6,7 +6,7 @@ module.exports = function (app) {
 
   // API
   app.use('/api/users', require('./api/user'));
-  // app.use('/api/seats', require('./api/seat'));
+  app.use('/api/seat', require('./api/seat'));
   // Auth
   app.use('/auth', require('./auth'));
 

@@ -11,7 +11,7 @@
         <span class = "emptyRate">空位率</span>
         <span class = "emptyRate percent">{{ratio}}%</span>
     </div>
-    <button class="clearFilter">
+    <button class="clearFilter" ng-click="deleteFilter()">
         <span class = "clearFilter_zh-cn">清除篩選</span>
         <span class = "clearFilter_en">Clear Filter</span>
     </button>
@@ -37,7 +37,7 @@
 <div class="container">
     <span class = "scanCard">刷卡輸入證號</span>
     <span class = "en">Place ID card under the scanner</span>
-    <input type="text" focus-me="shouldBeOpen" autofocus>
+    <input type="text" ng-model="userid" focus-me="shouldBeOpen" autofocus>
 </div>
 <div class="container">
     <span class = "scanCard">選擇座位</span>
@@ -45,12 +45,12 @@
 </div>
 <div class="container">
     <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span>
-    <button type="button" class="choose" ng-click="">確認/Submit</button>
+    <button type="button" class="choose" ng-click="submit()">確認/Submit</button>
     <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
 </div>
 </div>
 
-<div class="container_history"></div>
+<div class="container_history" ng-click="getHistory()"></div>
 
  <div class="notification" ng-style="setDisplay()">
     <span class = "registerSuccess zh-CN">登記成功</span>
