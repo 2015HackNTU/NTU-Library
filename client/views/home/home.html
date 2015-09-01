@@ -49,8 +49,32 @@
     <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
 </div>
 </div>
+<div class="flexible_area">
+	<div class="data">
+		<div class="last_time_title">
+			<span>上次座位 Last Time</span>
+		</div>
+		<div class="last_time_seat">
+			<span>A056</span>
+			<span class="status_circle"></span>
+			<span class="status">空位</span>
+		</div>
+		<div class="recent_title">
+			<span>最近常坐 Recent</span>
+		</div>
+		<div class="recent_seat">
+			<span>A056</span>
+			<span class="status_circle"></span>
+			<span class="status">空位</span>
+		</div>
+	</div>
+	<div class="no_data">
+		<span>查無資料 No Data</span>
+	</div>
+	<div class="container_history"></div>
+</div>
 
-<div class="container_history"></div>
+
 
  <div class="notification" ng-style="setDisplay()">
     <span class = "registerSuccess zh-CN">登記成功</span>
@@ -76,4 +100,4 @@
     <span class = "msg2">尚未選擇座位</span>
  </div>
 
- 
+
