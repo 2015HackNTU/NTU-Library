@@ -33,24 +33,26 @@
 
  <map></map>
 
- <div class="inputId">
-    <div class="container">
-        <span class = "scanCard">刷卡輸入證號</span>
-        <span class = "en">Place ID card under the scanner</span>
-        <input type="text" focus-me="shouldBeOpen" autofocus>
-    </div>
-    <div class="container">
-        <span class = "scanCard">選擇座位</span>
-        <span class = "en">Choose the seat</span>
-    </div>
-    <div class="container">
-        <span class = "seatId_selected" ng-show="isSelected">{{selected_seat}}</span>
-        <span class = "seatId_notSelected" ng-show="!isSelected">{{selected_seat}}</span>
-        <button type="button" ng-click="clearSelect()">清除/Clear</button>
-    </div>
- </div>
+<div class="inputId">
+<div class="container">
+    <span class = "scanCard">刷卡輸入證號</span>
+    <span class = "en">Place ID card under the scanner</span>
+    <input type="text" focus-me="shouldBeOpen" autofocus>
+</div>
+<div class="container">
+    <span class = "scanCard">選擇座位</span>
+    <span class = "en">Choose the seat</span>
+</div>
+<div class="container">
+    <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span>
+    <button type="button" class="choose" ng-click="">確認/Submit</button>
+    <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
+</div>
+</div>
 
- <div class="notification">
+<div class="container_history"></div>
+
+ <div class="notification" ng-style="setDisplay()">
     <span class = "registerSuccess zh-CN">登記成功</span>
     <span class = "registerSuccess">SUCCESS</span>
     <div class="containter top">
@@ -68,4 +70,8 @@
     <div class="container top">
         <span class = "seatId">A121</span>
     </div>
+ </div>
+ <div class="errorMsg">
+    <span class = "msg1">尚未輸入學生證號</span>
+    <span class = "msg2">尚未選擇座位</span>
  </div>

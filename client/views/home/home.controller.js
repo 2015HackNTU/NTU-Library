@@ -107,9 +107,8 @@ angular.module('ntuLibrary')
     $scope.ratio = 0;
     $scope.vacancySeat = [];
     $scope.nowFilterSelcted = [];
-
-    $scope.selected_seat = "尚未選擇";
     $scope.isSelected = false;
+    $scope.selected_seat = "尚未選擇";
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -119,11 +118,11 @@ angular.module('ntuLibrary')
           url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
       }).success(function(data){
       $scope.emptySeat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
-      $scope.ratio = Math.round($scope.emptySeat *10000 / $scope.allseat)/100;
+      $scope.ratio = (Math.round($scope.emptySeat *10000 / $scope.allseat)/100).toFixed(1);
       });
 		$http({
         	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
+         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy?area=a'
      	}).success(function(data){
         $scope.vacancySeat = data;
  			  data.forEach(function(elem,i){
@@ -209,13 +208,15 @@ angular.module('ntuLibrary')
       // $scope.selected_seat = selected[0];
     // });
     $timeout(function(){
+      $scope.isSelected = true;
       $scope.selected_seat = selected[0]; 
     },100)
 	}
   $scope.clearSelect = function(){
     // change("尚未選擇")
     $timeout(function(){
-      $scope.selected_seat = ""; 
+      $scope.isSelected = false;
+      $scope.selected_seat = "尚未選擇";
     },100)
   }
 
@@ -336,5 +337,8 @@ angular.module('ntuLibrary')
 		
 
 	}
+  function setDisplay(){
+    return { display: "block" };  
+  }
 
   }]);

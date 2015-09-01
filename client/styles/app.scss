@@ -208,10 +208,11 @@ map svg{
 	top: 32px;
 	right: 10px;
 	width: 240px;
-	height: 240px;
+	height: 260px;
 	background-color: #DEE2E5;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	border-radius: 1px;
+	z-index: 10;
 
 	.container{
 		margin-left: 10px;
@@ -240,19 +241,20 @@ map svg{
 	}
 	.seatId_selected{
 		color: #6DBD76;
-		font-size: 40px;
-		display: block;
-		text-align: center;
-		margin-bottom: 20px;
-	}
-	.seatId_notSelected{
-		color: #646464;
 		font-size: 28px;
 		display: block;
 		text-align: center;
+		margin-bottom: 14px;
+	}
+	.seatId_notSelected{
+		color: #646464;
+		font-size: 22px;
+		display: block;
+		text-align: center;
 		margin-bottom: 20px;
 	}
-	button{
+	.clear{
+		font-family: STHeitiTC-Medium;
 		background-color: #D65454;
 		color: #FFFFFF;
 		border: 1px solid #D65454;
@@ -264,10 +266,44 @@ map svg{
 		text-align: center;
 		margin-left: 16px;
 	}
+	.choose{
+		font-family: STHeitiTC-Medium;
+		background-color: #6DBD76;
+		color: #FFFFFF;
+		border: 1px solid #6DBD76;
+		border-radius: 4px;
+		width: 180px;
+		height: 25px;
+		font-size: 16px;
+		display: block;
+		text-align: center;
+		margin-left: 16px;
+		margin-bottom: 10px;
+	}
+
+}
+.container_history{
+	position: absolute;
+	top: 292px;
+	right: 10px;
+	display: block;
+	width: 240px;
+	height: 20px;
+	background-color: #EDEDED;
+	z-index: 5;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
+	&:before{
+		content: '\25BE';
+		display: block;
+		text-align: center;
+    color: #646464;
+	}
 }
 
 //**************input id area***********************
 
+
+//**************notification************************
 .notification{
 	display: none;
 	position: absolute;
@@ -316,3 +352,51 @@ map svg{
 	}
 
 }
+//**************notification************************
+
+
+//**************errorMsg****************************
+
+.errorMsg{
+	display: none;
+	position: absolute;
+	top: 240px;
+	left: 500px;
+	width: 240px;
+	height: 100px;
+	border-radius: 1px;
+	background: #444444;
+	border-radius: 4px;
+	.msg1{
+		display: none;
+		color: #FF7171;
+		font-size: 20px;
+		text-align: center;
+		margin-top:25px;
+		margin-bottom: 10px;
+		&:after{
+			display: block;
+			content: 'You Haven\'t Enter Your ID Number';
+			font-size: 12px;
+			text-align: center;
+			padding-top: 10px;
+		}
+	}
+	.msg2{
+		display: none;
+		color: #FF7171;
+		font-size: 20px;
+		text-align: center;
+		margin-top:25px;
+		margin-bottom: 10px;
+		&:after{
+			display: block;
+			content: 'You Haven\'t Choose A Seat';
+			font-size: 12px;
+			text-align: center;
+			padding-top: 10px;
+		}
+	}
+}
+
+//**************errorMsg****************************
