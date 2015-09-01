@@ -189,7 +189,7 @@ module.exports = {
     demostration.appendChild(demostrationElement);
 
     var demostrationElement = document.createElementNS(SvgUtils.svgNS, 'g');
-    demostrationElement.setAttribute('transform', 'translate(33 5)');
+    demostrationElement.setAttribute('transform', 'translate(30 5)');
     
     var demostrationData = document.createTextNode("空位");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
@@ -200,7 +200,7 @@ module.exports = {
     demostration.appendChild(demostrationElement);
 
     var demostrationElement = document.createElementNS(SvgUtils.svgNS, 'g');
-    demostrationElement.setAttribute('transform', 'translate(99 5)');
+    demostrationElement.setAttribute('transform', 'translate(96 5)');
     
     var demostrationData = document.createTextNode("暫離");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
@@ -211,7 +211,7 @@ module.exports = {
     demostration.appendChild(demostrationElement);
 
     var demostrationElement = document.createElementNS(SvgUtils.svgNS, 'g');
-    demostrationElement.setAttribute('transform', 'translate(165 5)');
+    demostrationElement.setAttribute('transform', 'translate(162 5)');
     
     var demostrationData = document.createTextNode("使用");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
@@ -244,7 +244,7 @@ module.exports = {
     demostration.appendChild(demostrationElement);
 
     var demostrationElement = document.createElementNS(SvgUtils.svgNS, 'g');
-    demostrationElement.setAttribute('transform', 'translate(170 28)');
+    demostrationElement.setAttribute('transform', 'translate(167 28)');
     
     var demostrationData = document.createTextNode("Used");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
