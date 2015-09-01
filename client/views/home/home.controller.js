@@ -215,7 +215,7 @@ angular.module('ntuLibrary')
   $scope.clearSelect = function(){
     // change("尚未選擇")
     $timeout(function(){
-      $scope.selected_seat = "尚未選擇"; 
+      $scope.selected_seat = ""; 
     },100)
   }
 
