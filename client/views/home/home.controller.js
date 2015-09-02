@@ -285,10 +285,19 @@ angular.module('ntuLibrary')
 
   };
   $scope.getHistory = function(){
-    Seat.getHistory($scope.userid)
-    .then(function(data){
-      console.log("res data is :", data);
-    });
+    console.log("getHistory changes!!! " , $scope.userid);
+    if($scope.userid.length === 9){
+      Seat.getHistory($scope.userid)
+      .then(function(data){
+        data.data.forEach(function (elem,i){
+          // outputData.push(elem);
+          console.log(elem.userID, elem.seat, elem.endTime);
+        })
+      },function(err){
+        console.log(err);
+      });
+
+    }
 
   }
 

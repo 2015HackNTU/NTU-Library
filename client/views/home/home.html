@@ -37,7 +37,7 @@
 <div class="container">
     <span class = "scanCard">刷卡輸入證號</span>
     <span class = "en">Place ID card under the scanner</span>
-    <input type="text" ng-model="userid" focus-me="shouldBeOpen" autofocus>
+    <input type="text" ng-model="userid" focus-me="shouldBeOpen" ng-change="getHistory()" autofocus>
 </div>
 <div class="container">
     <span class = "scanCard">選擇座位</span>
@@ -75,7 +75,7 @@
 	<div class="container_history"></div>
 </div>
 
-<div class="container_history" ng-click="getHistory()"></div>
+
 
  <div class="notification" ng-hide="noti_display">
     <span class = "registerSuccess zh-CN">登記成功</span>
