@@ -296,15 +296,12 @@ map svg{
 	cursor: pointer;
 	.container_history{
 		position: relative;
-		// top: 292px;
-		// right: 10px;
 		display: block;
 		width: 240px;
 		height: 20px;
 		background-color: #EDEDED;
 		z-index: 5;
 		box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
-		cursor: pointer;
 		&:before{
 			content: '\25BE';
 			display: block;
