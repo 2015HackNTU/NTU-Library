@@ -112,7 +112,10 @@ angular.module('ntuLibrary')
     $scope.selected_seat = "尚未選擇";
     $scope.historyData = false;
     $scope.noti_display = true;
+    $scope.lastSeat = "";
+    $scope.historySeat = [];
     $scope.less_seat = [];
+    $scope.historyStyle = [{"display":"none"},{"display":"none"}];
 
     $scope.init = function(){
 
@@ -286,13 +289,29 @@ angular.module('ntuLibrary')
   };
   $scope.getHistory = function(){
     console.log("getHistory changes!!! " , $scope.userid);
+    $scope.historyData = false;
+    $scope.historySeat = [];
+    $scope.historyStyle = [{"display":"none"},{"display":"none"}];
     if($scope.userid.length === 9){
       Seat.getHistory($scope.userid)
       .then(function(data){
-        data.data.forEach(function (elem,i){
-          // outputData.push(elem);
-          console.log(elem.userID, elem.seat, elem.endTime);
-        })
+        if (data.data.length == 0){
+          $scope.historyData = false;
+          $scope.historyStyle[1] = {"display":"block"};
+        }else{
+          $scope.historyData = true;
+          $scope.historyStyle[0] = {"display":"block"};
+          data.data.forEach(function (elem,i){
+            // outputData.push(elem);
+            if (i == 0)
+              $scope.lastSeat = data.data[i].seat;
+            $scope.historySeat.push(elem.seat);
+            // console.log($scope.historySeat);
+            // console.log(elem.userID, elem.seat, elem.endTime);
+          })
+          console.log($scope.historySeat);
+        }
+        
       },function(err){
         console.log(err);
       });
