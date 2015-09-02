@@ -227,7 +227,7 @@ module.exports = {
     var demostrationData = document.createTextNode("Available");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
     demostrationText.setAttribute('transform', 'matrix(1 0 0 1 -317 286.28)');
-    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px');
+    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px;');
     demostrationText.appendChild(demostrationData);
     demostrationElement.appendChild(demostrationText);
     demostration.appendChild(demostrationElement);
@@ -238,7 +238,7 @@ module.exports = {
     var demostrationData = document.createTextNode("Leaved");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
     demostrationText.setAttribute('transform', 'matrix(1 0 0 1 -317 286.28)');
-    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px');
+    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px;');
     demostrationText.appendChild(demostrationData);
     demostrationElement.appendChild(demostrationText);
     demostration.appendChild(demostrationElement);
@@ -249,7 +249,7 @@ module.exports = {
     var demostrationData = document.createTextNode("Used");
     var demostrationText = document.createElementNS(SvgUtils.svgNS, 'text');
     demostrationText.setAttribute('transform', 'matrix(1 0 0 1 -317 286.28)');
-    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px');
+    demostrationElement.setAttribute('style', 'fill:#AFB1B2;font-family:STHeitiTC-Medium;font-size:9px;');
     demostrationText.appendChild(demostrationData);
     demostrationElement.appendChild(demostrationText);
     demostration.appendChild(demostrationElement);

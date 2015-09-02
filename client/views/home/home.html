@@ -44,13 +44,14 @@
     <span class = "en">Choose the seat</span>
 </div>
 <div class="container">
-    <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span>
+    <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span><!--尚未選擇-->
     <button type="button" class="choose" ng-click="submit()">確認/Submit</button>
     <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
 </div>
 </div>
 <div class="flexible_area">
-	<div class="data">
+	<div ng-class="{true:'data', false:'no_data'}[historyData]"></div>
+	<!-- <div class="data">
 		<div class="last_time_title">
 			<span>上次座位 Last Time</span>
 		</div>
@@ -70,13 +71,13 @@
 	</div>
 	<div class="no_data">
 		<span>查無資料 No Data</span>
-	</div>
+	</div> -->
 	<div class="container_history"></div>
 </div>
 
 <div class="container_history" ng-click="getHistory()"></div>
 
- <div class="notification" ng-style="setDisplay()">
+ <div class="notification" ng-hide="noti_display">
     <span class = "registerSuccess zh-CN">登記成功</span>
     <span class = "registerSuccess">SUCCESS</span>
     <div class="containter top">

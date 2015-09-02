@@ -1,5 +1,5 @@
 'use strict';
-
+// var Promise = require('promise');
 angular.module('ntuLibrary')
 .directive('circle', function() {
     return {
@@ -110,6 +110,8 @@ angular.module('ntuLibrary')
     $scope.nowFilterSelcted = [];
     $scope.isSelected = false;
     $scope.selected_seat = "尚未選擇";
+    $scope.historyData = false;
+    $scope.noti_display = true;
     $scope.less_seat = [];
 
     $scope.init = function(){
@@ -265,11 +267,29 @@ angular.module('ntuLibrary')
   $scope.submit = function(){
     var endDate = new Date();
     var startDate = new Date(Date.parse(endDate) - 3600000*2);
-    Seat.create($scope.userid,$scope.selected_seat,startDate,endDate);
+    Seat.create($scope.userid,$scope.selected_seat,startDate,endDate)
+    .then(function(msg){      
+      console.log(msg);
+      if(msg.statusText === "OK"){  
+        $scope.noti_display = false;
+        $timeout(function(){
+          $scope.noti_display = true;
+          $scope.selected_seat = "尚未選擇";
+          $scope.isSelected = false;
+          $scope.userid = "";
+        },5000)
+      }
+    },function(err){
+      console.log(err);
+    });
 
   };
   $scope.getHistory = function(){
-    Seat.getHistory($scope.userid);
+    Seat.getHistory($scope.userid)
+    .then(function(data){
+      console.log("res data is :", data);
+    });
+
   }
 
 
@@ -347,8 +367,6 @@ angular.module('ntuLibrary')
 		
 
 	}
-  function setDisplay(){
-    return { display: "block" };  
-  }
+  
 
   }]);
