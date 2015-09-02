@@ -280,6 +280,9 @@ angular.module('ntuLibrary')
           $scope.selected_seat = "尚未選擇";
           $scope.isSelected = false;
           $scope.userid = "";
+          $scope.lastSeat = "";
+          $scope.historySeat = "";
+          $scope.historyStyle = [{"display":"none"},{"display":"none"}];
         },5000)
       }
     },function(err){
