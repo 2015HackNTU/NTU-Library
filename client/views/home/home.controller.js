@@ -116,6 +116,9 @@ angular.module('ntuLibrary')
     $scope.historySeat = [];
     $scope.less_seat = [];
     $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+    $scope.errorMsg_display = true;
+    $scope.errorMsg1_display = true;
+    $scope.errorMsg2_display = true;
 
     $scope.init = function(){
 
@@ -268,26 +271,44 @@ angular.module('ntuLibrary')
 
 
   $scope.submit = function(){
-    var endDate = new Date();
-    var startDate = new Date(Date.parse(endDate) - 3600000*2);
-    Seat.create($scope.userid,$scope.selected_seat,startDate,endDate)
-    .then(function(msg){      
-      console.log(msg);
-      if(msg.statusText === "OK"){  
-        $scope.noti_display = false;
-        $timeout(function(){
-          $scope.noti_display = true;
-          $scope.selected_seat = "尚未選擇";
-          $scope.isSelected = false;
-          $scope.userid = "";
-          $scope.lastSeat = "";
-          $scope.historySeat = "";
-          $scope.historyStyle = [{"display":"none"},{"display":"none"}];
-        },5000)
-      }
-    },function(err){
-      console.log(err);
-    });
+    if ($scope.userid && $scope.selected_seat != "尚未選擇"){
+      var endDate = new Date();
+      var startDate = new Date(Date.parse(endDate) - 3600000*2);
+      Seat.create($scope.userid,$scope.selected_seat,startDate,endDate)
+      .then(function(msg){      
+        console.log(msg);
+        if(msg.statusText === "OK"){  
+          $scope.noti_display = false;
+          $timeout(function(){
+            $scope.noti_display = true;
+            $scope.selected_seat = "尚未選擇";
+            $scope.isSelected = false;
+            $scope.userid = "";
+            $scope.lastSeat = "";
+            $scope.historySeat = "";
+            $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+          },5000)
+        }
+      },function(err){
+        console.log(err);
+      });
+
+    }else{
+      $scope.errorMsg_display = false;
+      if (!$scope.userid)
+        $scope.errorMsg1_display = false;
+      else
+        $scope.errorMsg2_display = false;
+      $timeout(function(){
+            $scope.noti_display = true;
+            $scope.selected_seat = "尚未選擇";
+            $scope.isSelected = false;
+            $scope.userid = "";
+            $scope.lastSeat = "";
+            $scope.historySeat = "";
+            $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+          },5000)
+    }
 
   };
   $scope.getHistory = function(){

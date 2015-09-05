@@ -82,7 +82,7 @@
     <span class = "registerSuccess">SUCCESS</span>
     <div class="containter top">
         <span class="wrapper">
-            <span class="name zh-CN">李鹿尋</span>
+            <span class="name zh-CN">李昱賢</span>
             <span class="seatIs">同學登記的座位為</span>
         </span>
     </div>
@@ -96,9 +96,9 @@
         <span class = "seatId">{{selected_seat}}</span>
     </div>
  </div>
- <div class="errorMsg">
-    <span class = "msg1">尚未輸入學生證號</span>
-    <span class = "msg2">尚未選擇座位</span>
+ <div class="errorMsg" ng-hide="errorMsg_display">
+    <span class = "msg1" ng-hide="errorMsg1_display">尚未輸入學生證號</span>
+    <span class = "msg2" ng-hide="errorMsg2_display">尚未選擇座位</span>
  </div>
 
 
