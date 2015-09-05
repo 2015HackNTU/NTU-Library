@@ -107,6 +107,7 @@ angular.module('ntuLibrary')
     $scope.userid = "";
     $scope.ratio = 0;
     $scope.vacancySeat = [];
+    $scope.leaveSeat = [];
     $scope.nowFilterSelcted = [];
     $scope.isSelected = false;
     $scope.selected_seat = "尚未選擇";
@@ -125,7 +126,15 @@ angular.module('ntuLibrary')
       }).success(function(data){
       $scope.emptySeat += parseInt(data[0].A) + parseInt(data[1].B) + parseInt(data[2].C);
       $scope.ratio = (Math.round($scope.emptySeat *10000 / $scope.allseat)/100).toFixed(1);
-      });
+    });
+
+    // $http({
+    //       method: 'GET',
+    //       url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
+    //   }).success(function(data){
+    //     $scope.leaveSeat = data;
+    // });
+
 		$http({
         	method: 'GET',
          	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
