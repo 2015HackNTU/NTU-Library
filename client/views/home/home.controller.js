@@ -220,15 +220,15 @@ angular.module('ntuLibrary')
 	};
   
 	$scope.showAlert = function(event){
+
 		var selected = event.target.id.split('_');
-    // change(selected[0]);
-    // $scope.$apply(function(){
-      // $scope.selected_seat = selected[0];
-    // });
-    $timeout(function(){
-      $scope.isSelected = true;
-      $scope.selected_seat = selected[0]; 
-    },100)
+    if ($scope.vacancySeat.indexOf(selected[0]) >= 0){
+      $timeout(function(){
+        $scope.isSelected = true;
+        $scope.selected_seat = selected[0]; 
+      },100)
+    }
+    
 	}
   $scope.clearSelect = function(){
     // change("尚未選擇")
