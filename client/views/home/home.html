@@ -57,16 +57,20 @@
 		</div>
 		<div class="last_time_seat">
 			<span>{{lastSeat}}</span>
-			<span class="status_circle"></span>
-			<span class="status">空位</span>
+            <div>
+                <span class="status_circle"></span>
+                <span class="status">空位</span>
+            </div>
 		</div>
 		<div class="recent_title">
 			<span>最近常坐 Recent</span>
 		</div>
 		<div class="recent_seat" ng-repeat="seat in historySeat">
 			<span>{{seat}}</span>
-			<span class="status_circle"></span>
-			<span class="status">空位</span>
+            <div>
+                <span class="status_circle"></span>
+                <span class="status">空位</span>
+            </div>
 		</div>
 	</div>
 	<div class="no_data" ng-style="historyStyle[1]">
