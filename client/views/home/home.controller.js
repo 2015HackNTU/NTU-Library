@@ -107,7 +107,7 @@ angular.module('ntuLibrary')
     $scope.userid = "";
     $scope.ratio = 0;
     $scope.vacancySeat = [];
-    $scope.leaveSeat = [];
+    $scope.leaveSeat = [];//暫離array
     $scope.nowFilterSelcted = [];
     $scope.isSelected = false;
     $scope.selected_seat = "尚未選擇";
@@ -337,12 +337,24 @@ angular.module('ntuLibrary')
           data.data.forEach(function (elem,i){
             // outputData.push(elem);
             if (i == 0)
-              $scope.lastSeat = data.data[i].seat;
-            $scope.historySeat.push(elem.seat);
+              $scope.lastSeat = elem.seat;
+            var item = new Object();
+            item.seatName = elem.seat;
+            if ($scope.vacancySeat.indexOf(elem.seat) >= 0){
+              item.color = "#6DBD76";
+              item.statusMsg = "空位";
+            }else if ($scope.leaveSeat.indexOf(elem.seat) >= 0){
+              item.color = "#EDAF5A";
+              item.statusMsg = "暫離";
+            }else{
+              item.color = "#D65454";
+              item.statusMsg = "使用";
+            }
+            $scope.historySeat.push(item);
             // console.log($scope.historySeat);
             // console.log(elem.userID, elem.seat, elem.endTime);
           })
-          console.log($scope.historySeat);
+          console.log("This is historySeat:" , $scope.historySeat);
         }
         
       },function(err){

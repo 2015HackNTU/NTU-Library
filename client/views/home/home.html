@@ -66,10 +66,10 @@
 			<span>最近常坐 Recent</span>
 		</div>
 		<div class="recent_seat" ng-repeat="seat in historySeat">
-			<span>{{seat}}</span>
+			<span>{{seat.seatName}}</span>
             <div class="right_status">
-                <span class="status_circle"></span>
-                <span class="status">空位</span>
+                <span class="status_circle" style="background-color:{{seat.color}}"></span>
+                <span class="status" style="color:{{seat.color}}">{{seat.statusMsg}}</span>
             </div>
 		</div>
 	</div>

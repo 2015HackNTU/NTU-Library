@@ -338,6 +338,8 @@ map svg{
 			}
 			.right_status{
 				display: inline-block;
+				position: absolute;
+				right: 20px;
 			}
 			.status_circle{
 				height: 16px;
@@ -345,7 +347,7 @@ map svg{
 				border-radius: 50%;
 				background-color:#6DBD76;
 				display: inline-block;
-				margin: 12px 0 0 0;
+				margin: 12px 5px 0 5px;
 			}
 			.status{
 				color:#6DBD76;
