@@ -1,7 +1,7 @@
 <div class="left-nav-bar" ng-controller="HomeCtrl">
     <div class="container">
         <span class = "title">台灣大學圖書館</span>
-        <span class = "title">自習室管理系統</span>
+        <span class = "title">自習室選位系統</span>
     </div>
     <div class="subcontainer">
         <sapn class = "leftSeat">剩餘空位</span>
@@ -31,7 +31,7 @@
     </div>
 </div>
 
- <map></map>
+ <map style="background-color:#F4E2D6"></map>
 
 <div class="inputId">
 <div class="container">
@@ -58,8 +58,8 @@
 		<div class="last_time_seat">
 			<span>{{lastSeat}}</span>
             <div class="right_status">
-                <span class="status_circle"></span>
-                <span class="status">空位</span>
+                <span class="status_circle" style="background-color:{{lastSeat_color}}"></span>
+                <span class="status" style="color:{{lastSeat_color}}">{{lastSeat_statusMsg}}</span>
             </div>
 		</div>
 		<div class="recent_title">

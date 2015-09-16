@@ -614,8 +614,8 @@ var optionsDefaults = {
 , mouseWheelZoomEnabled: true // enable or disable zooming by mouse wheel (default enabled)
 , preventMouseEventsDefault: true // enable or disable preventDefault for mouse events
 , zoomScaleSensitivity: 0.1 // Zoom sensitivity
-, minZoom: 0.5 // Minimum Zoom level
-, maxZoom: 10 // Maximum Zoom level
+, minZoom: 1 // Minimum Zoom level
+, maxZoom: 20 // Maximum Zoom level
 , fit: true // enable or disable viewport fit in SVG (default true)
 , center: true // enable or disable viewport centering in SVG (default true)
 , refreshRate: 'auto' // Maximum number of frames per second (altering SVG's viewport)
@@ -919,7 +919,34 @@ SvgPanZoom.prototype.publicZoomAtPoint = function(scale, point, absolute) {
  *
  * @return {Float} zoom scale
  */
+ var addText = false;
 SvgPanZoom.prototype.getZoom = function() {
+    if(this.viewport.getZoom() > 15 && !addText){
+        console.log(this.viewport.getZoom(), addText);
+        var allSeat = ["A100","A101"];
+        allSeat.forEach(function(elem, i){
+            var query = "g[id*="+elem+"]";
+            var groupEl = document.querySelectorAll(query);
+            console.log(groupEl);
+            if (groupEl.length > 0){
+                var innerHtml = groupEl[0].innerHTML;
+                console.log("innerHtml is : " , innerHtml);
+                var cx = innerHtml.substr(innerHtml.indexOf("cx"),3);
+                console.log("cx is :" , cx);
+                var seatData = document.createTextNode(elem);
+                var seatText = document.createElementNS('http://www.w3.org/2000/svg','text');
+                seatText.setAttribute('style', 'font-family:STHeitiTC-Medium;font-size:1.6173px;');
+                seatText.setAttribute('transform','matrix(1 0 0 1 265.2336 321.0886)');
+                seatText.appendChild(seatData);
+                groupEl[0].appendChild(seatText);
+            }
+        });
+        addText = true;        
+    }
+    else if (this.viewport.getZoom() <= 15 && addText){
+        //delete textNode
+    }
+    
   return this.viewport.getZoom()
 }
 
