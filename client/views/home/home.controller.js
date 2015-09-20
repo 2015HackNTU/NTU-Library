@@ -6,7 +6,8 @@ angular.module('ntuLibrary')
         restrict: 'E',
         link: function(scope, element, attrs) {
             element.bind('click', function($event) {
-               	scope.showAlert($event);
+              var clickEventOnCircle = $event.target.id.split('_');
+               	scope.showAlert(clickEventOnCircle[0]);
             });
         }
     }
@@ -219,13 +220,13 @@ angular.module('ntuLibrary')
 
 	};
   
-	$scope.showAlert = function(event){
-
-		var selected = event.target.id.split('_');
-    if ($scope.vacancySeat.indexOf(selected[0]) >= 0){
+	$scope.showAlert = function(seat){
+    console.log(seat);
+		
+    if ($scope.vacancySeat.indexOf(seat) >= 0){
       $timeout(function(){
         $scope.isSelected = true;
-        $scope.selected_seat = selected[0]; 
+        $scope.selected_seat = seat; 
       },100)
     }
     
@@ -335,20 +336,24 @@ angular.module('ntuLibrary')
           $scope.historyData = true;
           $scope.historyStyle[0] = {"display":"block"};
           data.data.forEach(function (elem,i){
+            console.log(elem);
             // outputData.push(elem);
             if (i == 0){//上次使用
               $scope.lastSeat = elem.seat;
               if($scope.vacancySeat.indexOf(elem.seat) >= 0){
                 $scope.lastSeat_color = "#6DBD76";
                 $scope.lastSeat_statusMsg = "空位";
+                $scope.lastSeat_cursor = "pointer";
               }
               else if ($scope.leaveSeat.indexOf(elem.seat) >= 0){
                 $scope.lastSeat_color = "#EDAF5A";
                 $scope.lastSeat_statusMsg = "暫離";
+                $scope.lastSeat_cursor = "alias";
               }
               else{
                 $scope.lastSeat_color = "#D65454";
                 $scope.lastSeat_statusMsg = "使用";
+                $scope.lastSeat_cursor = "alias";
               }
             }
             var item = new Object();
@@ -356,12 +361,15 @@ angular.module('ntuLibrary')
             if ($scope.vacancySeat.indexOf(elem.seat) >= 0){
               item.color = "#6DBD76";
               item.statusMsg = "空位";
+              item.cursor = "pointer";
             }else if ($scope.leaveSeat.indexOf(elem.seat) >= 0){
               item.color = "#EDAF5A";
               item.statusMsg = "暫離";
+              item.cursor = "default";
             }else{
               item.color = "#D65454";
               item.statusMsg = "使用";
+              item.cursor = "default";
             }
             $scope.historySeat.push(item);
             // console.log($scope.historySeat);

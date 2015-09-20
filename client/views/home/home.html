@@ -55,7 +55,7 @@
 		<div class="last_time_title">
 			<span>上次座位 Last Time</span>
 		</div>
-		<div class="last_time_seat">
+		<div class="last_time_seat" style="cursor:{{lastSeat_cursor}}" ng-click="showAlert(lastSeat)">
 			<span>{{lastSeat}}</span>
             <div class="right_status">
                 <span class="status_circle" style="background-color:{{lastSeat_color}}"></span>
@@ -65,7 +65,7 @@
 		<div class="recent_title">
 			<span>最近常坐 Recent</span>
 		</div>
-		<div class="recent_seat" ng-repeat="seat in historySeat">
+		<div class="recent_seat" ng-repeat="seat in historySeat" style="cursor:{{seat.cursor}}" ng-click="showAlert(seat.seatName)">
 			<span>{{seat.seatName}}</span>
             <div class="right_status">
                 <span class="status_circle" style="background-color:{{seat.color}}"></span>
