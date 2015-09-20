@@ -102,7 +102,7 @@ angular.module('ntuLibrary')
 
       ]
 
-    $scope.allseat = 828;
+    $scope.allseat = 827;
     $scope.emptySeat = 0;
     $scope.userid = "";
     $scope.ratio = 0;

@@ -921,29 +921,47 @@ SvgPanZoom.prototype.publicZoomAtPoint = function(scale, point, absolute) {
  */
  var addText = false;
 SvgPanZoom.prototype.getZoom = function() {
-    if(this.viewport.getZoom() > 15 && !addText){
-        console.log(this.viewport.getZoom(), addText);
-        var allSeat = ["A100","A101"];
-        allSeat.forEach(function(elem, i){
-            var query = "g[id*="+elem+"]";
-            var groupEl = document.querySelectorAll(query);
-            console.log(groupEl);
+
+
+    if(this.viewport.getZoom() > 10 && !addText){
+        console.log(this.viewport.getZoom());
+        addText = true;
+
+        // var allSeat = ["A100","A101"];
+        seatCode.forEach(function(elem, i){
+            var groupQuery = "g[id*="+elem+"]";
+            var circleQuery = "circle[id*="+elem+"]"
+            var groupEl = document.querySelectorAll(groupQuery);
+            var circleEl = document.querySelectorAll(circleQuery);
             if (groupEl.length > 0){
-                var innerHtml = groupEl[0].innerHTML;
-                console.log("innerHtml is : " , innerHtml);
-                var cx = innerHtml.substr(innerHtml.indexOf("cx"),3);
-                console.log("cx is :" , cx);
+                var cx = circleEl[0].cx.baseVal.value;
+                var cy = circleEl[0].cy.baseVal.value;
                 var seatData = document.createTextNode(elem);
                 var seatText = document.createElementNS('http://www.w3.org/2000/svg','text');
+                var matrix = 'matrix(1 0 0 1 '+ (cx-2) +' '+ (cy+0.5) +')';
+                var textID = circleEl[0].id.replace("_3_","_4_");
+
+                seatText.setAttribute('id', textID);
                 seatText.setAttribute('style', 'font-family:STHeitiTC-Medium;font-size:1.6173px;');
-                seatText.setAttribute('transform','matrix(1 0 0 1 265.2336 321.0886)');
+                seatText.setAttribute('transform', matrix);
                 seatText.appendChild(seatData);
                 groupEl[0].appendChild(seatText);
             }
         });
-        addText = true;        
+             
     }
-    else if (this.viewport.getZoom() <= 15 && addText){
+    else if (this.viewport.getZoom() <= 10 && addText){
+        addText = false;
+        seatCode.forEach(function(elem, i){
+            var groupQuery = "g[id*="+elem+"]";
+            var textQuery = "text[id*="+elem+"]";
+            var seatData = document.createTextNode(elem);
+            var groupEl = document.querySelectorAll(groupQuery);
+            var textEl = document.querySelectorAll(textQuery);
+            if (groupEl.length > 0){
+                groupEl[0].removeChild(textEl[0]);
+            }
+        });
         //delete textNode
     }
     
