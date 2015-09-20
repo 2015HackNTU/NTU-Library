@@ -121,7 +121,7 @@ angular.module('ntuLibrary')
     $scope.errorMsg1_display = true;
     $scope.errorMsg2_display = true;
 
-    $scope.init = function(){
+ $scope.init = function(){
 
     $http({
           method: 'GET',
@@ -138,39 +138,23 @@ angular.module('ntuLibrary')
     //     $scope.leaveSeat = data;
     // });
 
-		$http({
-        	method: 'GET',
-         	url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
-     	}).success(function(data){
-        $scope.vacancySeat = data;
- 			  data.forEach(function(elem,i){
- 			  	var query = "circle[id*="+elem+"]";
- 			  	var myEl = angular.element( document.querySelectorAll(query) );
- 			  	if (myEl.length > 0){
- 			  		myEl[0].setAttribute("style","fill:#6DBD76;");
-            var seatData = document.createTextNode("A111");
-            var seatText = document.createElementNS('SvgUtils.svgNS','text');
-           seatText.appendChild(seatData);
-            myEl[0].appendChild(seatText);
- 			  	}
- 			  })
- 			  setLessSeat(data)
-    		
-    	});
-
-
-      var query = "circle[id*=A100]";
-      var myEl = angular.element( document.querySelectorAll(query) );
-      console.log(myEl);
-      if (myEl.length > 0){
-        myEl[0].setAttribute("style","fill:#6DBD76;");
-        var seatData = document.createTextNode("A111");
-        var seatText = document.createElementNS('SvgUtils.svgNS','text');
-        seatText.appendChild(seatData);
-        myEl[0].appendChild(seatText);
-      }
-
-	}
+    $http({
+        method: 'GET',
+        url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
+    }).success(function(data){
+      $scope.vacancySeat = data;
+      data.forEach(function(elem,i){
+        var query = "circle[id*="+elem+"]";
+        var myEl = angular.element( document.querySelectorAll(query) );
+        if (myEl.length > 0){
+          myEl[0].setAttribute("style","fill:#6DBD76;");
+        }
+      })
+      setLessSeat(data)
+      
+    });
+      
+  }
 
 	$scope.init();
 
@@ -352,8 +336,21 @@ angular.module('ntuLibrary')
           $scope.historyStyle[0] = {"display":"block"};
           data.data.forEach(function (elem,i){
             // outputData.push(elem);
-            if (i == 0)
+            if (i == 0){//上次使用
               $scope.lastSeat = elem.seat;
+              if($scope.vacancySeat.indexOf(elem.seat) >= 0){
+                $scope.lastSeat_color = "#6DBD76";
+                $scope.lastSeat_statusMsg = "空位";
+              }
+              else if ($scope.leaveSeat.indexOf(elem.seat) >= 0){
+                $scope.lastSeat_color = "#EDAF5A";
+                $scope.lastSeat_statusMsg = "暫離";
+              }
+              else{
+                $scope.lastSeat_color = "#D65454";
+                $scope.lastSeat_statusMsg = "使用";
+              }
+            }
             var item = new Object();
             item.seatName = elem.seat;
             if ($scope.vacancySeat.indexOf(elem.seat) >= 0){
