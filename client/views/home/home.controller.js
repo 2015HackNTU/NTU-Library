@@ -15,7 +15,7 @@ angular.module('ntuLibrary')
 
 
 angular.module('ntuLibrary')
-  .controller('HomeCtrl', ['$scope','$http','$timeout','Seat',function ($scope,$http,$timeout,Seat) {
+  .controller('HomeCtrl', ['$scope','$http','$timeout','Seat','$window',function ($scope,$http,$timeout,Seat,$window) {
 
 
     var vm = this;
@@ -290,13 +290,15 @@ angular.module('ntuLibrary')
         if(msg.statusText === "OK"){  
           $scope.noti_display = false;
           $timeout(function(){
-            $scope.noti_display = true;
-            $scope.selected_seat = "尚未選擇";
-            $scope.isSelected = false;
-            $scope.userid = "";
-            $scope.lastSeat = "";
-            $scope.historySeat = "";
-            $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+            // $scope.noti_display = true;
+            // $scope.selected_seat = "尚未選擇";
+            // $scope.isSelected = false;
+            // $scope.userid = "";
+            // $scope.lastSeat = "";
+            // $scope.historySeat = "";
+            // $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+            // $scope.deleteFilter();
+            $window.location.reload();
           },5000)
         }
       },function(err){
@@ -310,13 +312,15 @@ angular.module('ntuLibrary')
       else
         $scope.errorMsg2_display = false;
       $timeout(function(){
-            $scope.noti_display = true;
-            $scope.selected_seat = "尚未選擇";
-            $scope.isSelected = false;
-            $scope.userid = "";
-            $scope.lastSeat = "";
-            $scope.historySeat = "";
-            $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+            // $scope.noti_display = true;
+            // $scope.selected_seat = "尚未選擇";
+            // $scope.isSelected = false;
+            // $scope.userid = "";
+            // $scope.lastSeat = "";
+            // $scope.historySeat = "";
+            // $scope.historyStyle = [{"display":"none"},{"display":"none"}];
+            // $scope.deleteFilter();
+            $window.location.reload();
           },5000)
     }
 
