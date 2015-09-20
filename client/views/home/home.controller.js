@@ -103,7 +103,7 @@ angular.module('ntuLibrary')
 
       ]
 
-    $scope.allseat = 828;
+    $scope.allseat = 827;
     $scope.emptySeat = 0;
     $scope.userid = "";
     $scope.ratio = 0;
@@ -122,7 +122,7 @@ angular.module('ntuLibrary')
     $scope.errorMsg1_display = true;
     $scope.errorMsg2_display = true;
 
-    $scope.init = function(){
+ $scope.init = function(){
 
     $http({
           method: 'GET',
@@ -139,7 +139,7 @@ angular.module('ntuLibrary')
     //     $scope.leaveSeat = data;
     // });
 
-		$http({
+    $http({
         method: 'GET',
         url: 'http://140.112.113.35:8080/StudyRoom/api/getVacancy'
     }).success(function(data){
@@ -155,7 +155,7 @@ angular.module('ntuLibrary')
       
     });
       
-	}
+  }
 
 	$scope.init();
 
