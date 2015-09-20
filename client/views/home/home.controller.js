@@ -148,11 +148,27 @@ angular.module('ntuLibrary')
  			  	var myEl = angular.element( document.querySelectorAll(query) );
  			  	if (myEl.length > 0){
  			  		myEl[0].setAttribute("style","fill:#6DBD76;");
+            var seatData = document.createTextNode("A111");
+            var seatText = document.createElementNS('SvgUtils.svgNS','text');
+           seatText.appendChild(seatData);
+            myEl[0].appendChild(seatText);
  			  	}
  			  })
  			  setLessSeat(data)
     		
     	});
+
+
+      var query = "circle[id*=A100]";
+      var myEl = angular.element( document.querySelectorAll(query) );
+      console.log(myEl);
+      if (myEl.length > 0){
+        myEl[0].setAttribute("style","fill:#6DBD76;");
+        var seatData = document.createTextNode("A111");
+        var seatText = document.createElementNS('SvgUtils.svgNS','text');
+        seatText.appendChild(seatData);
+        myEl[0].appendChild(seatText);
+      }
 
 	}
 
