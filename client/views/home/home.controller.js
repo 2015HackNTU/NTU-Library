@@ -132,12 +132,23 @@ angular.module('ntuLibrary')
       $scope.ratio = (Math.round($scope.emptySeat *10000 / $scope.allseat)/100).toFixed(1);
     });
 
-    // $http({
-    //       method: 'GET',
-    //       url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatCount'
-    //   }).success(function(data){
-    //     $scope.leaveSeat = data;
-    // });
+    $http({
+          method: 'GET',
+          url: 'http://140.112.113.35:8080/StudyRoom/api/getSeatInfo'
+      }).success(function(data){
+        data.forEach(function (elem,i){
+          if (elem.status == "2"){
+            console.log(elem.seat_id);
+            $scope.leaveSeat.push(elem.seat_id);
+            var query = "circle[id*="+elem.seat_id+"]";
+            var myEl = angular.element( document.querySelectorAll(query) );
+            if (myEl.length > 0){
+              myEl[0].setAttribute("style","fill:#EDAF5A;");
+            }
+          }
+        })
+        console.log($scope.leaveSeat);
+    });
 
     $http({
         method: 'GET',
@@ -206,6 +217,12 @@ angular.module('ntuLibrary')
           myEl[i].setAttribute("style", "opacity: 1; fill:#6DBD76;"); 
         }else{
           myEl[i].setAttribute("style", "opacity: 0.1; fill:#6DBD76;"); 
+        }
+      }else if ($scope.leaveSeat.indexOf(Seatid) >= 0){
+        if (match){
+          myEl[i].setAttribute("style", "opacity: 1; fill:#EDAF5A;"); 
+        }else{
+          myEl[i].setAttribute("style", "opacity: 0.1; fill:#EDAF5A;"); 
         }
       }else{
         if (match){
