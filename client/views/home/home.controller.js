@@ -268,31 +268,39 @@ angular.module('ntuLibrary')
 	}
 
 
-
+  //Write into Database Add change seat
 	// $scope.submit = function(){
 
 	// 	$http({
  //        	method: 'GET',
- //         	url: 'http://140.112.113.35:8080/StudyRoom/api/checkUser?user_id=' + userid
+ //         	url: 'http://140.112.113.35:8080/StudyRoom/api/checkUser?user_id=' + $scope.userid
  //     	}).success(function(res){
  // 			if (!res.authority){			//Check Fail
  // 				console.log(res.message);	
  // 			}else{							//Check Access
  // 				console.log(res.token);
- // 				$http({
- //        			method: 'GET',
- //         			url: 'http://140.112.113.35:8080/StudyRoom/api/checkin?user_id='+userid+'&token='+res.token
- //     			}).success(function(res){
- // 					if (res.affected){		//Success
+ //        request_url = 'http://140.112.113.35:8080/StudyRoom/api/checkin?user_id=' + $scope.uesrid;
+ //        request_url += ('&token_id=' + res.token);
+ //        request_url += ('&seat_id=' + $scope.selected_seat);
+ //        if (!res.seat_id){
+ //          request_url += '&type=1';
+ //        }else{
+ //          request_url += '&type=1';
+ //          request_url += ('$seat_id_old=' + res.seat_id);
+ //        }
+ //        $http({
+ //              method: 'GET',
+ //              url: request_url
+ //          }).success(function(res){
+ //            if (res.affected){    //Success
 
- // 					}else{					//Fail
+ //            }else{          //Fail
 
- // 					}
- //    			});
-
+ //            }
+ //          });
  // 			}
 
- //    	});
+ //    });
 
 	// }
 
