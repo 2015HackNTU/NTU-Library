@@ -1,0 +1,108 @@
+<div class="left-nav-bar" ng-controller="HomeCtrl">
+    <div class="container">
+        <span class = "title">台灣大學圖書館</span>
+        <span class = "title">自習室選位系統</span>
+    </div>
+    <div class="subcontainer">
+        <sapn class = "leftSeat">剩餘空位</span>
+        <span class = "leftSeat number">{{emptySeat}}</span>
+    </div>
+    <div class="subcontainer">
+        <span class = "emptyRate">空位率</span>
+        <span class = "emptyRate percent">{{ratio}}%</span>
+    </div>
+    <button class="clearFilter" ng-click="deleteFilter()">
+        <span class = "clearFilter_zh-cn">清除篩選</span>
+        <span class = "clearFilter_en">Clear Filter</span>
+    </button>
+
+    <div ng-repeat="filterCategory in filterConstraint">
+    	<div class="subcontainer">
+    		<p class = "laptopArea">{{filterCategory.name}}</p>
+    		<p class = "laptopArea en">{{filterCategory.enName}}</p>	
+    	</div>
+        <div class="subcontainer">
+            <label ng-repeat="filter in filterCategory.filter">
+                <input type = "checkbox" ng-model="filter.selected" ng-change="filterSelected(filter)">
+                <span>{{filter.name}}/{{filter.enName}}</span>
+                <br/>
+            </label>    
+        </div>
+    </div>
+</div>
+
+ <map></map>
+
+<div class="inputId">
+<div class="container">
+    <span class = "scanCard">刷卡輸入證號</span>
+    <span class = "en">Place ID card under the scanner</span>
+    <input type="text" ng-model="userid" focus-me="shouldBeOpen" ng-change="getHistory()" autofocus>
+</div>
+<div class="container">
+    <span class = "scanCard">選擇座位</span>
+    <span class = "en">Choose the seat</span>
+</div>
+<div class="container">
+    <span ng-class = "{true:'seatId_selected', false: 'seatId_notSelected'}[isSelected]">{{selected_seat}}</span><!--尚未選擇-->
+    <button type="button" class="choose" ng-click="submit()">確認/Submit</button>
+    <button type="button" class="clear" ng-click="clearSelect()">清除/Clear</button>
+</div>
+</div>
+<div class="flexible_area">
+	<!-- <div ng-class="{true:'data', false:'no_data'}[historyData]"></div> -->
+	<div class="data" ng-style="historyStyle[0]">
+		<div class="last_time_title">
+			<span>上次座位 Last Time</span>
+		</div>
+		<div class="last_time_seat" style="cursor:{{lastSeat_cursor}}" ng-click="showAlert(lastSeat)">
+			<span>{{lastSeat}}</span>
+            <div class="right_status">
+                <span class="status_circle" style="background-color:{{lastSeat_color}}"></span>
+                <span class="status" style="color:{{lastSeat_color}}">{{lastSeat_statusMsg}}</span>
+            </div>
+		</div>
+		<div class="recent_title">
+			<span>最近常坐 Recent</span>
+		</div>
+		<div class="recent_seat" ng-repeat="seat in historySeat" style="cursor:{{seat.cursor}}" ng-click="showAlert(seat.seatName)">
+			<span>{{seat.seatName}}</span>
+            <div class="right_status">
+                <span class="status_circle" style="background-color:{{seat.color}}"></span>
+                <span class="status" style="color:{{seat.color}}">{{seat.statusMsg}}</span>
+            </div>
+		</div>
+	</div>
+	<div class="no_data" ng-style="historyStyle[1]">
+		<span>查無資料 No Data</span>
+	</div>
+	<div class="container_history"></div>
+</div>
+
+
+
+ <div class="notification" ng-hide="noti_display">
+    <span class = "registerSuccess zh-CN">登記成功</span>
+    <span class = "registerSuccess">SUCCESS</span>
+    <div class="containter top">
+        <span class="wrapper">
+            <span class="name zh-CN">李昱賢</span>
+            <span class="seatIs">同學登記的座位為</span>
+        </span>
+    </div>
+    <div class="containter">
+        <span class="wrapper">
+            <span class="name en">{{userid}},</span>
+            <span class="seatIs en">your seat number is</span>
+        </span>
+    </div>
+    <div class="container top">
+        <span class = "seatId">{{selected_seat}}</span>
+    </div>
+ </div>
+ <div class="errorMsg" ng-hide="errorMsg_display">
+    <span class = "msg1" ng-hide="errorMsg1_display">尚未輸入學生證號</span>
+    <span class = "msg2" ng-hide="errorMsg2_display">尚未選擇座位</span>
+ </div>
+
+
