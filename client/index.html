@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="ntuLibrary">
+  <head>
+
+    <base href="/">
+
+    <title>ntuLibrary</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <!-- build:css app.css -->
+
+    <!-- bower:css -->
+    <!-- endinject -->
+
+    <link rel="stylesheet" href="styles/css/app.css">
+
+    <!-- endbuild -->
+
+  </head>
+  <body>
+
+    
+    <div ng-view></div>
+
+    <!-- build:js app.js -->
+
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/angular-gestures/gestures.min.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="app.js"></script>
+    <script src="views/signup/signup.js"></script>
+    <script src="views/signup/signup.controller.js"></script>
+    <script src="views/login/login.js"></script>
+    <script src="views/login/login.controller.js"></script>
+    <script src="views/index/index.js"></script>
+    <script src="views/index/index.controller.js"></script>
+    <script src="views/home/home.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="services/svg-pan-zoom/svg-pan-zoom.js"></script>
+    <script src="services/svg-pan-zoom/config.js"></script>
+    <script src="services/seat/seat.js"></script>
+    <script src="services/auth/auth.js"></script>
+    <script src="directives/nav-bar/nav-bar.directive.js"></script>
+    <script src="directives/map/map.directive.js"></script>
+    <!-- endinject -->
+
+    <!-- endbuild -->
+
+  </body>
+</html>
