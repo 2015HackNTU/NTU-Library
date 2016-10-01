@@ -3,16 +3,77 @@
 angular.module('ntuLibrary')
 .directive('circle', function() {
     return {
-        restrict: 'E',
-        link: function(scope, element, attrs) {
-            element.bind('click', function($event) {
-              var clickEventOnCircle = $event.target.id.split('_');
-               	scope.showAlert(clickEventOnCircle[0]);
-            });
-        }
+      restrict: 'E',
+      link: function(scope, element, attrs) {
+        element.bind('click', function($event) {
+          var clickEventOnCircle = $event.target.id.split('_');
+          scope.showAlert(clickEventOnCircle[0]);
+        });
+        element.bind('dblclick',function($event){
+          console.log("This is circle dblclick!");
+        })
+      }
     }
 });
+angular.module('ntuLibrary')
+.directive('rect', function(){
+  return{
+    restrict: 'E',
+    link: function(scope, element, attrs) {
+      element.bind('dblclick', function($event) {
+        console.log("This is a rect dblclick!")
+        var clickEventOnGroup= $event.target.id.split('_');
+        console.log(clickEventOnGroup);
 
+        if(clickEventOnGroup[0] === "table"){
+          var query = "";
+
+          //making the query for getElementById
+          for(var i = 0 ; i < clickEventOnGroup.length-2 ; i++){
+            if(i < clickEventOnGroup.length - 3){
+              query = query + clickEventOnGroup[i] + "_";
+            }
+            else{
+              query = query + clickEventOnGroup[i];
+            }  
+          }
+          console.log("query is: ",query);
+          var theTable = document.getElementById(query)
+          console.log("theTable is :",theTable)
+          var rectEle = theTable.lastElementChild
+          rectEle.setAttribute("fill","green")
+          // rectEle.setAttribute("stroke-width","1")
+          var bbox = theTable.getBBox()
+          var bbox_x = bbox.x + bbox.width/2
+          var bbox_y = bbox.y + bbox.height/2
+          console.log(bbox)
+          var zoomToPoint = {'x':bbox_x, 'y':bbox_y}
+          if(window.zoomMap.getZoom() >= 15){
+            console.log(window.zoomMap.getZoom())
+            window.zoomMap.zoomToBoundingBox(1, zoomToPoint, false)
+            // window.zoomMap.zoomAtPointBy(1, zoomToPoint, false)
+            console.log(window.zoomMap.getZoom())
+          }
+          else{
+            console.log(window.zoomMap.getZoom())
+            window.zoomMap.zoomToBoundingBox(15, zoomToPoint, true)
+            // window.zoomMap.zoomAtPoint(15, zoomToPoint, true)
+            console.log(window.zoomMap.getZoom())
+          }
+          
+          
+
+        }
+        
+        
+        
+
+        // var newPointX = this.width/2 - bbox_x*zoomScale
+        // var newPointY = this.height/2 - bbox_y*zoomScale
+      });
+    }
+  }
+});
 
 angular.module('ntuLibrary')
   .controller('HomeCtrl', ['$scope','$http','$timeout','Seat','$window',function ($scope,$http,$timeout,Seat,$window) {
@@ -490,6 +551,5 @@ angular.module('ntuLibrary')
 		
 
 	}
-  
 
   }]);

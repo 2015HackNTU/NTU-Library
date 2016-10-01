@@ -1,6 +1,6 @@
 // svg-pan-zoom v3.2.1
 // https://github.com/ariutta/svg-pan-zoom
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){ 
 var svgPanZoom = require('./svg-pan-zoom.js');
 
 // UMD module definition
@@ -13,7 +13,6 @@ var svgPanZoom = require('./svg-pan-zoom.js');
   // CMD
   } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = svgPanZoom;
-
     // Browser
     // Keep exporting globally as module.exports is available because of browserify
     window.svgPanZoom = svgPanZoom;
@@ -610,13 +609,14 @@ var optionsDefaults = {
 , panEnabled: true // enable or disable panning (default enabled)
 , controlIconsEnabled: false // insert icons to give user an option in addition to mouse events to control pan/zoom (default disabled)
 , zoomEnabled: true // enable or disable zooming (default enabled)
-, dblClickZoomEnabled: true // enable or disable zooming by double clicking (default enabled)
+, dblClickZoomEnabled: false // enable or disable zooming by double clicking (default enabled)
 , mouseWheelZoomEnabled: true // enable or disable zooming by mouse wheel (default enabled)
 , preventMouseEventsDefault: true // enable or disable preventDefault for mouse events
-, zoomScaleSensitivity: 0.1 // Zoom sensitivity
+, zoomScaleSensitivity: 6 // Zoom sensitivity
 , minZoom: 1 // Minimum Zoom level
 , maxZoom: 20 // Maximum Zoom level
 , fit: true // enable or disable viewport fit in SVG (default true)
+, contain: false // enable or disable viewport contain the svg (default false)
 , center: true // enable or disable viewport centering in SVG (default true)
 , refreshRate: 'auto' // Maximum number of frames per second (altering SVG's viewport)
 , beforeZoom: null
@@ -840,31 +840,164 @@ SvgPanZoom.prototype.handleMouseWheel = function(evt) {
  *                                Otherwise, zoomScale is treated as a multiplied (e.g. 1.10 would zoom in 10%)
  */
 SvgPanZoom.prototype.zoomAtPoint = function(zoomScale, point, zoomAbsolute) {
-  var originalState = this.viewport.getOriginalState()
+    var originalState = this.viewport.getOriginalState()
 
-  if (!zoomAbsolute) {
-    // Fit zoomScale in set bounds
-    if (this.getZoom() * zoomScale < this.options.minZoom * originalState.zoom) {
-      zoomScale = (this.options.minZoom * originalState.zoom) / this.getZoom()
-    } else if (this.getZoom() * zoomScale > this.options.maxZoom * originalState.zoom) {
-      zoomScale = (this.options.maxZoom * originalState.zoom) / this.getZoom()
-    }
-  } else {
-    // Fit zoomScale in set bounds
-    zoomScale = Math.max(this.options.minZoom * originalState.zoom, Math.min(this.options.maxZoom * originalState.zoom, zoomScale))
-    // Find relative scale to achieve desired scale
-    zoomScale = zoomScale/this.getZoom()
-  }
+      if (!zoomAbsolute) {
+        // Fit zoomScale in set bounds
+        if (this.getZoom() * zoomScale < this.options.minZoom * originalState.zoom) {
+          zoomScale = (this.options.minZoom * originalState.zoom) / this.getZoom()
+        } else if (this.getZoom() * zoomScale > this.options.maxZoom * originalState.zoom) {
+          zoomScale = (this.options.maxZoom * originalState.zoom) / this.getZoom()
+        }
+      } else {
+        // Fit zoomScale in set bounds
+        zoomScale = Math.max(this.options.minZoom * originalState.zoom, Math.min(this.options.maxZoom * originalState.zoom, zoomScale))
+        // Find relative scale to achieve desired scale
+        zoomScale = zoomScale/this.getZoom()
+      }
 
-  var oldCTM = this.viewport.getCTM()
-    , relativePoint = point.matrixTransform(oldCTM.inverse())
-    , modifier = this.svg.createSVGMatrix().translate(relativePoint.x, relativePoint.y).scale(zoomScale).translate(-relativePoint.x, -relativePoint.y)
-    , newCTM = oldCTM.multiply(modifier)
+      var oldCTM = this.viewport.getCTM()
+        , relativePoint = point.matrixTransform(oldCTM.inverse())
+        , modifier = this.svg.createSVGMatrix().translate(relativePoint.x, relativePoint.y).scale(zoomScale).translate(-relativePoint.x, -relativePoint.y)
+        , newCTM = oldCTM.multiply(modifier)
 
-  if (newCTM.a !== oldCTM.a) {
-    this.viewport.setCTM(newCTM)
-  }
+      if (newCTM.a !== oldCTM.a) {
+        this.viewport.setCTM(newCTM)
+      }
+
 }
+
+/**
+ * Zoom to bounding box
+ *
+ * @param  {SVGPoint} point
+ * @param  {Float} zoomScale    Number representing how much to zoom
+ * @param  {Boolean} zoomAbsolute Default false. If true, zoomScale is treated as an absolute value.
+ *                                Otherwise, zoomScale is treated as a multiplied (e.g. 1.10 would zoom in 10%)
+ */
+SvgPanZoom.prototype.zoomToBoundingBox = function(zoomScale, point, zoomAbsolute) {
+    var originalState = this.viewport.getOriginalState()
+
+        var animationTime = 600 // ms
+          , animationStepTime = 15 // one frame per 30 ms
+          , animationSteps = animationTime / animationStepTime
+          , animationStep = 0
+          , intervalID = null
+          , stepX = 0
+          , stepY = 0
+
+        console.log("width/height:", this.width, this.height)
+        console.log("this.stateOrigin:",this.stateOrigin)
+        console.log("originalState.zoom:",originalState.zoom)
+        console.log("this.viewport", this.viewport)
+
+          if (!zoomAbsolute) {
+            // Fit zoomScale in se=t bounds
+            if (this.getZoom() * zoomScale < this.options.minZoom * originalState.zoom) {
+              zoomScale = (this.options.minZoom * originalState.zoom) / this.getZoom()
+            } else if (this.getZoom() * zoomScale > this.options.maxZoom * originalState.zoom) {
+              zoomScale = (this.options.maxZoom * originalState.zoom) / this.getZoom()
+            }
+          } else {
+            // Fit zoomScale in set bounds
+            zoomScale = Math.max(this.options.minZoom * originalState.zoom, Math.min(this.options.maxZoom * originalState.zoom, zoomScale))
+            // Find relative scale to achieve desired scale
+            zoomScale = zoomScale/this.getZoom()
+          }
+
+        var oldCTM = this.viewport.getCTM()
+        
+            if(!zoomAbsolute && this.getZoom() != originalState.zoom){  
+                //calculating the total move 
+                var lastZoom = oldCTM.a / originalState.zoom
+                var theOldCenter = SvgUtils.createSVGPoint(this.svg, 0,0)
+                theOldCenter.x = (Math.abs(oldCTM.e/originalState.zoom)+(1024/2))/lastZoom
+                theOldCenter.y = (Math.abs(oldCTM.f/originalState.zoom)+(768/2))/lastZoom
+
+                var relativePoint = SvgUtils.createSVGPoint(this.svg, 0,0)        
+                relativePoint.x = (point.x - theOldCenter.x)*lastZoom
+                relativePoint.y = (point.y - theOldCenter.y)*lastZoom
+                stepX = relativePoint.x*originalState.zoom/animationSteps
+                stepY = relativePoint.y*originalState.zoom/animationSteps
+                var moveTheEnd = SvgUtils.createSVGPoint(this.svg, -relativePoint.x*originalState.zoom+oldCTM.e , -relativePoint.y*originalState.zoom+oldCTM.f)
+
+                //calculating the first move
+                var modifier = this.svg.createSVGMatrix().translate(-stepX, -stepY)
+                var newCTM = oldCTM.multiply(modifier)
+                this.viewport.setCTM(newCTM)
+                var stepXCount = stepX
+                var stepYCount = stepY
+                animationStep++
+                
+            }
+            else{
+                //calculating the total move and count each steps
+                var theOldCenter = SvgUtils.createSVGPoint(this.svg, 1024/2, 768/2)
+                var relativePoint = SvgUtils.createSVGPoint(this.svg, 0,0)
+                relativePoint.x = zoomScale*point.x - (theOldCenter.x) 
+                relativePoint.y = zoomScale*point.y - (theOldCenter.y) 
+                stepX = (relativePoint.x*originalState.zoom)/animationSteps
+                stepY = (relativePoint.y*originalState.zoom)/animationSteps
+                stepZoom = (zoomScale*originalState.zoom)/animationSteps
+                var moveTheEnd = SvgUtils.createSVGPoint(this.svg, -relativePoint.x*originalState.zoom-oldCTM.e , -relativePoint.y*originalState.zoom-oldCTM.f)
+
+                //calculating the first move
+                var modifier = this.svg.createSVGMatrix().translate(-stepX, -stepY).scale(stepZoom)
+                var newCTM = oldCTM.multiply(modifier)
+                this.viewport.setCTM(newCTM)
+                var stepXCount = stepX
+                var stepYCount = stepY
+                var stepZoomCount = stepZoom
+                animationStep++
+            }
+                
+            var that = this
+            console.log(oldCTM, moveTheEnd, point, modifier, newCTM, stepX,stepY,stepZoom)
+            console.log(oldCTM, relativePoint, modifier, newCTM)
+
+          if (newCTM.e !== oldCTM.e || newCTM.f !== oldCTM.f || newCTM.a !== oldCTM.a) {
+            oldCTM = that.viewport.getCTM()
+            intervalID = setInterval(function(){
+              if (animationStep++ < animationSteps) {
+                if (animationStep == animationSteps) {
+                    if(!zoomAbsolute && that.getZoom() != originalState.zoom){
+                        newCTM.a = newCTM.d = oldCTM.a
+                    }
+                    else{
+                        newCTM.a = newCTM.d = zoomScale*originalState.zoom
+                    }
+                    newCTM.e = moveTheEnd.x
+                    newCTM.f = moveTheEnd.y
+                    that.viewport.setCTM(newCTM)
+                }
+                else{
+                    if(!zoomAbsolute && that.getZoom() != originalState.zoom){
+                        newCTM.a = newCTM.d = oldCTM.a
+                    }
+                    else{
+                        stepZoomCount += stepZoom 
+                        newCTM.a = newCTM.d = oldCTM.a + stepZoomCount
+                    }
+                    stepXCount += stepX
+                    stepYCount += stepY 
+                    newCTM.e = oldCTM.e + (-stepXCount)
+                    newCTM.f = oldCTM.f + (-stepYCount)
+                    that.viewport.setCTM(newCTM)
+                }
+
+              }
+              else {
+                // Cancel interval
+                clearInterval(intervalID)
+              }
+            }, animationStepTime)
+
+            // this.viewport.setCTM(newCTM)
+        }
+}
+
+
+
 
 /**
  * Zoom at center point
@@ -923,47 +1056,47 @@ SvgPanZoom.prototype.publicZoomAtPoint = function(scale, point, absolute) {
 SvgPanZoom.prototype.getZoom = function() {
 
 
-    if(this.viewport.getZoom() > 10 && !addText){
-        console.log(this.viewport.getZoom());
-        addText = true;
+    // if(this.viewport.getZoom() > 10 && !addText){
+    //     addText = true;
+    //     console.log("ZoomScale is higher than 10!")
+    //     // var allSeat = ["A100","A101"];
+    //     seatCode.forEach(function(elem, i){
+    //         var groupQuery = "g[id*="+elem+"]";
+    //         var circleQuery = "circle[id*="+elem+"]"
+    //         var groupEl = document.querySelectorAll(groupQuery);
+    //         var circleEl = document.querySelectorAll(circleQuery);
+    //         if (groupEl.length > 0){
+    //             var cx = circleEl[0].cx.baseVal.value;
+    //             var cy = circleEl[0].cy.baseVal.value;
+    //             var seatData = document.createTextNode(elem);
+    //             var seatText = document.createElementNS('http://www.w3.org/2000/svg','text');
+    //             var matrix = 'matrix(1 0 0 1 '+ (cx-2) +' '+ (cy+0.5) +')';
+    //             var textID = circleEl[0].id.replace("_3_","_4_");
 
-        // var allSeat = ["A100","A101"];
-        seatCode.forEach(function(elem, i){
-            var groupQuery = "g[id*="+elem+"]";
-            var circleQuery = "circle[id*="+elem+"]"
-            var groupEl = document.querySelectorAll(groupQuery);
-            var circleEl = document.querySelectorAll(circleQuery);
-            if (groupEl.length > 0){
-                var cx = circleEl[0].cx.baseVal.value;
-                var cy = circleEl[0].cy.baseVal.value;
-                var seatData = document.createTextNode(elem);
-                var seatText = document.createElementNS('http://www.w3.org/2000/svg','text');
-                var matrix = 'matrix(1 0 0 1 '+ (cx-2) +' '+ (cy+0.5) +')';
-                var textID = circleEl[0].id.replace("_3_","_4_");
-
-                seatText.setAttribute('id', textID);
-                seatText.setAttribute('style', 'font-family:STHeitiTC-Medium;font-size:1.6173px;');
-                seatText.setAttribute('transform', matrix);
-                seatText.appendChild(seatData);
-                groupEl[0].appendChild(seatText);
-            }
-        });
+    //             seatText.setAttribute('id', textID);
+    //             seatText.setAttribute('style', 'font-family:STHeitiTC-Medium;font-size:1.6173px;');
+    //             seatText.setAttribute('transform', matrix);
+    //             seatText.appendChild(seatData);
+    //             groupEl[0].appendChild(seatText);
+    //         }
+    //     });
              
-    }
-    else if (this.viewport.getZoom() <= 10 && addText){
-        addText = false;
-        seatCode.forEach(function(elem, i){
-            var groupQuery = "g[id*="+elem+"]";
-            var textQuery = "text[id*="+elem+"]";
-            var seatData = document.createTextNode(elem);
-            var groupEl = document.querySelectorAll(groupQuery);
-            var textEl = document.querySelectorAll(textQuery);
-            if (groupEl.length > 0){
-                groupEl[0].removeChild(textEl[0]);
-            }
-        });
-        //delete textNode
-    }
+    // }
+    // else if (this.viewport.getZoom() <= 10 && addText){
+    //     console.log("zoom scale is under 10!")
+    //     addText = false;
+    //     seatCode.forEach(function(elem, i){
+    //         var groupQuery = "g[id*="+elem+"]";
+    //         var textQuery = "text[id*="+elem+"]";
+    //         var seatData = document.createTextNode(elem);
+    //         var groupEl = document.querySelectorAll(groupQuery);
+    //         var textEl = document.querySelectorAll(textQuery);
+    //         if (groupEl.length > 0){
+    //             groupEl[0].removeChild(textEl[0]);
+    //         }
+    //     });
+    //     //delete textNode
+    // }
     
   return this.viewport.getZoom()
 }
@@ -1170,6 +1303,30 @@ SvgPanZoom.prototype.panBy = function(point) {
   viewportCTM.f += point.y
   this.viewport.setCTM(viewportCTM)
 }
+/**
+ * Relatively pan the graph by a specified rendered position vector
+ *
+ * @param  {Object} point {x: 0, y: 0}
+ */
+SvgPanZoom.prototype.customPanBy = function(amount){ // {x: 1, y: 2}
+  var animationTime = 300 // ms
+    , animationStepTime = 15 // one frame per 30 ms
+    , animationSteps = animationTime / animationStepTime
+    , animationStep = 0
+    , intervalID = null
+    , stepX = amount.x / animationSteps
+    , stepY = amount.y / animationSteps
+
+  intervalID = setInterval(function(){
+    if (animationStep++ < animationSteps) {
+      this.panBy({x: stepX, y: stepY})
+    } else {
+      // Cancel interval
+      clearInterval(intervalID)
+    }
+  }, animationStepTime)
+}
+
 
 /**
  * Get pan vector
@@ -1331,6 +1488,8 @@ SvgPanZoom.prototype.getPublicInstance = function() {
       }
       // Destroy
     , destroy: function() {that.destroy(); return that.pi}
+    , zoomToBoundingBox: function(scale, point, zoomAbsolute){that.zoomToBoundingBox(scale, point, zoomAbsolute); return that.pi}
+    , customPanBy: function(amount) {that.customPanBy(amount); return that.pi}
     }
   }
 

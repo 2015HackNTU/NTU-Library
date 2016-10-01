@@ -8,6 +8,9 @@ angular.module('ntuLibrary', [
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
     $routeProvider
+      .when('/index',{
+        templateUrl: 'views/index/index.html'
+      })
       .otherwise({
         redirectTo: '/'
       });
