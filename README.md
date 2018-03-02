@@ -14,7 +14,8 @@ An elegant redesign of library's seating system at NTU
 
 ![]( ./client/assets/ntu-library-screenshot-1.png )
 
-#### [video demo](https://drive.google.com/file/d/1dCGB1riOJL8klBP1rlj4aongKxxBJuBi/view?usp=sharing)
+- video demo
+<iframe src="https://drive.google.com/file/d/1dCGB1riOJL8klBP1rlj4aongKxxBJuBi/preview" width="100%" height="100%"></iframe>
 
 ## Quick Start
 ### Install
